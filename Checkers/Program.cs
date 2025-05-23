@@ -12,6 +12,9 @@ namespace Checkers
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new EntranceForm());
+            using var context = new Checkers.Data.CheckersDbContext();
+            var usersCount = context.Users.Count();
+            MessageBox.Show($"В базе найдено пользователей: {usersCount}");
         }
     }
 }
