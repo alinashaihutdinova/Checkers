@@ -1,20 +1,24 @@
-﻿using System;
+﻿using Checkers.Core.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Checkers.Forms
 {
+    /// <summary>
+    /// Основная форма приложения
+    /// </summary>
     public partial class MainForm : Form
     {
+        private readonly IUserService _userService;
         public MainForm()
         {
             InitializeComponent();
+        }
+        public MainForm(IUserService userService) : this()
+        {
+            _userService = userService;
         }
     }
 }

@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿
 
 namespace Checkers.Forms
 {
+    /// <summary>
+    /// Форма регистрации нового пользователя 
+    /// </summary>
     public partial class RegistrationForm : Form
     {
         public RegistrationForm()
         {
             InitializeComponent();
+        }
+        public RegistrationForm(IServiceProvider serviceProvider) : this()
+        {
+     
         }
     }
 }
