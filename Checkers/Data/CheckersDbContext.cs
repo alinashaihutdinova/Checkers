@@ -15,20 +15,5 @@ namespace Checkers.Data
         {
             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=mydatabase;Username=postgres;Password=alshnqq");
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Game>()
-                .HasOne(g => g.WhitePlayer)
-                .WithMany(u => u.WhiteGames)
-                .HasForeignKey(g => g.WhitePlayerId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Game>()
-                .HasOne(g => g.BlackPlayer)
-                .WithMany(u => u.BlackGames)
-                .HasForeignKey(g => g.BlackPlayerId)
-                .OnDelete(DeleteBehavior.Restrict);
-            base.OnModelCreating(modelBuilder);
-        }
     }
 }
