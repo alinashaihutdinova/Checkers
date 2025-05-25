@@ -2,13 +2,13 @@ version: '3.8'
 
 services:
   db:
-    image: postgres:17.5
+    image: postgres:latest
     container_name: my_postgres
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: your_password
+      POSTGRES_PASSWORD: alshnqq
       POSTGRES_DB: mydatabase
     volumes:
-      - ./scripts:/docker-entrypoint-initdb.d/
+      - ./scripts:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
