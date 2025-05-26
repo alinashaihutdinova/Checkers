@@ -8,7 +8,5 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: alshnqq
       POSTGRES_DB: mydatabase
-    volumes:
-      - ./scripts:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
