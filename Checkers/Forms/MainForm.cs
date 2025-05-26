@@ -1,23 +1,20 @@
 ﻿using Checkers.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 
 namespace Checkers.Forms
 {
     /// <summary>
-    /// Основная форма приложения
+    /// основная форма приложения
     /// </summary>
     public partial class MainForm : Form
     {
         private readonly IUserService _userService;
-        public MainForm()
+        /// <summary>
+        /// конструктор класса
+        /// </summary>
+        /// <param name="userService">сервис аутентификации пользователей</param>
+        public MainForm(IUserService userService)
         {
             InitializeComponent();
-        }
-        public MainForm(IUserService userService) : this()
-        {
             _userService = userService;
         }
     }

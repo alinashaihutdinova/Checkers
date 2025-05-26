@@ -4,12 +4,21 @@ using Checkers.Core.Entities;
 namespace Checkers.Data
 {
     /// <summary>
-    /// Контекст базы данных
+    /// контекст базы данных
     /// </summary>
     public class CheckersDbContext : DbContext
     {
+        /// <summary>
+        /// таблица "users" в БД
+        /// </summary>
         public DbSet<User> Users { get; set; }
+        /// <summary>
+        /// таблица "games" в БД
+        /// </summary>
         public DbSet<Game> Games { get; set; }
+        /// <summary>
+        /// таблица "moves" в БД
+        /// </summary>
         public DbSet<Move> Moves { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

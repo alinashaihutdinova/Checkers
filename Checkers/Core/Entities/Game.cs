@@ -1,21 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Checkers.Core.Entities
+﻿namespace Checkers.Core.Entities
 {
+    /// <summary>
+    /// игра между двумя пользователями
+    /// </summary>
     public class Game
     {
-        public int Id { get; set; }
-        public int WhitePlayerId { get; set; }
+        /// <summary>
+        /// айди игры
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
+        /// айди игрока за белых
+        /// </summary>
+        public Guid WhitePlayerId { get; set; }
+        /// <summary>
+        /// игрок за белых
+        /// </summary>
         public User WhitePlayer { get; set; } = null!;
-        public int BlackPlayerId { get; set; }
+        /// <summary>
+        /// айди игрока за чёрных
+        /// </summary>
+        public Guid BlackPlayerId { get; set; }
+        /// <summary>
+        /// игрок за чёрных
+        /// </summary>
         public User BlackPlayer { get; set; } = null!;
+        /// <summary>
+        /// время начала игры
+        /// </summary>
         public DateTime StartedAt { get; set; }
+        /// <summary>
+        /// время окончания игры 
+        /// </summary>
         public DateTime? FinishedAt { get; set; }
+        /// <summary>
+        /// победитель игры, если есть
+        /// </summary>
         public string? Winner { get; set; }
+        /// <summary>
+        /// список ходов в игре
+        /// </summary>
         public List<Move> Moves { get; set; } = new();
     }
 }

@@ -1,19 +1,22 @@
 ﻿
+using Checkers.Core.Services;
 
 namespace Checkers.Forms
 {
     /// <summary>
-    /// Форма регистрации нового пользователя 
+    /// форма регистрации нового пользователя 
     /// </summary>
     public partial class RegistrationForm : Form
     {
-        public RegistrationForm()
+        private readonly IUserService _userService;
+        /// <summary>
+        /// конструктор класса
+        /// </summary>
+        /// <param name="userService">сервис аутентификации и регистрации пользователей</param>
+        public RegistrationForm(IUserService userService)
         {
             InitializeComponent();
-        }
-        public RegistrationForm(IServiceProvider serviceProvider) : this()
-        {
-     
+            _userService = userService;
         }
     }
 }

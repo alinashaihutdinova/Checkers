@@ -4,23 +4,25 @@ using Castle.Windsor;
 namespace Checkers
 {
     /// <summary>
-    /// Форма для входа пользователя в систему
+    /// форма для входа пользователя в систему
     /// </summary>
     public partial class EntranceForm : Form
     {
         private bool passwordVisible = false;
-        private readonly IUserService _userService;
         private readonly IWindsorContainer _container;
-        public EntranceForm(IUserService userService, IWindsorContainer container)
+        /// <summary>
+        /// конструктор класса с внедрённым контейнером 
+        /// </summary>
+        /// <param name="container">контейнер Windsor</param>
+        public EntranceForm(IWindsorContainer container)
         {
             InitializeComponent();
-            _userService = userService;
             _container = container;
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string login = txtLogin.Text.Trim();
-            string password = txtPassword.Text;
+            var login = txtLogin.Text.Trim();
+            var password = txtPassword.Text;
 
             if (string.IsNullOrWhiteSpace(login) || login == "Логин")
             {
@@ -34,14 +36,15 @@ namespace Checkers
                 return;
             }
 
-            var user = _userService.Authenticate(login, password);
+            var userService = _container.Resolve<IUserService>();
+            var user = userService.Authenticate(login, password);
 
             if (user == null)
             {
                 MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var mainForm = _container.Resolve<MainForm>();
+            var mainForm = new MainForm(userService);
             mainForm.Show();
             this.Hide();
         }
@@ -68,7 +71,7 @@ namespace Checkers
         }
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            var registrationForm = _container.Resolve<RegistrationForm>();
+            var registrationForm = new RegistrationForm(_container.Resolve<IUserService>());
             registrationForm.Show();
             this.Hide();
         }
