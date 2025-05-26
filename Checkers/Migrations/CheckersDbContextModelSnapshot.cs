@@ -24,14 +24,12 @@ namespace Checkers.Migrations
 
             modelBuilder.Entity("Checkers.Core.Entities.Game", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BlackPlayerId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("BlackPlayerId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("FinishedAt")
                         .HasColumnType("timestamp with time zone");
@@ -39,8 +37,8 @@ namespace Checkers.Migrations
                     b.Property<DateTime>("StartedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("WhitePlayerId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("WhitePlayerId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Winner")
                         .HasColumnType("text");
@@ -56,11 +54,9 @@ namespace Checkers.Migrations
 
             modelBuilder.Entity("Checkers.Core.Entities.Move", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -69,8 +65,8 @@ namespace Checkers.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("GameId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("MoveNumber")
                         .HasColumnType("integer");
@@ -92,11 +88,9 @@ namespace Checkers.Migrations
 
             modelBuilder.Entity("Checkers.Core.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Login")
                         .IsRequired()
@@ -116,13 +110,13 @@ namespace Checkers.Migrations
                     b.HasOne("Checkers.Core.Entities.User", "BlackPlayer")
                         .WithMany("BlackGames")
                         .HasForeignKey("BlackPlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Checkers.Core.Entities.User", "WhitePlayer")
                         .WithMany("WhiteGames")
                         .HasForeignKey("WhitePlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("BlackPlayer");

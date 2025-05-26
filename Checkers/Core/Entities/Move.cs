@@ -9,11 +9,11 @@ namespace Checkers.Core.Entities
         /// <summary>
         /// айди хода
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         /// <summary>
         /// айди игры, к которой относится ход
         /// </summary>
-        public Guid GameId { get; set; }
+        public Guid GameId { get; set; } = Guid.NewGuid();
         /// <summary>
         /// ссылка на игру
         /// </summary>

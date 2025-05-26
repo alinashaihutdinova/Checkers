@@ -8,7 +8,7 @@
         /// <summary>)
         /// айди пользователя
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         /// <summary>
         /// логин пользователя
         /// </summary>

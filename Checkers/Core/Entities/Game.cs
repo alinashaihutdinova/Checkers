@@ -8,11 +8,11 @@
         /// <summary>
         /// айди игры
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         /// <summary>
         /// айди игрока за белых
         /// </summary>
-        public Guid WhitePlayerId { get; set; }
+        public Guid WhitePlayerId { get; set; } 
         /// <summary>
         /// игрок за белых
         /// </summary>

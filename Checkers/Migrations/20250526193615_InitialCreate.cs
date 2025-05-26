@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -16,8 +15,7 @@ namespace Checkers.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Login = table.Column<string>(type: "text", nullable: false),
                     PasswordHash = table.Column<string>(type: "text", nullable: false)
                 },
@@ -30,10 +28,9 @@ namespace Checkers.Migrations
                 name: "Games",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    WhitePlayerId = table.Column<int>(type: "integer", nullable: false),
-                    BlackPlayerId = table.Column<int>(type: "integer", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    WhitePlayerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    BlackPlayerId = table.Column<Guid>(type: "uuid", nullable: false),
                     StartedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     FinishedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Winner = table.Column<string>(type: "text", nullable: true)
@@ -46,22 +43,21 @@ namespace Checkers.Migrations
                         column: x => x.BlackPlayerId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Games_Users_WhitePlayerId",
                         column: x => x.WhitePlayerId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Moves",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    GameId = table.Column<int>(type: "integer", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    GameId = table.Column<Guid>(type: "uuid", nullable: false),
                     MoveNumber = table.Column<int>(type: "integer", nullable: false),
                     PlayerColor = table.Column<string>(type: "text", nullable: false),
                     FromPosition = table.Column<string>(type: "text", nullable: false),
