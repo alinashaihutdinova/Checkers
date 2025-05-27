@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EntranceForm));
             lblTitle = new Label();
             txtLogin = new TextBox();
             txtPassword = new TextBox();
@@ -78,13 +79,14 @@
             // 
             btnTogglePassword.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnTogglePassword.BackColor = SystemColors.Window;
+            btnTogglePassword.BackgroundImage = (Image)resources.GetObject("btnTogglePassword.BackgroundImage");
+            btnTogglePassword.BackgroundImageLayout = ImageLayout.Stretch;
             btnTogglePassword.FlatAppearance.BorderSize = 0;
             btnTogglePassword.FlatStyle = FlatStyle.Flat;
             btnTogglePassword.Location = new Point(829, 260);
             btnTogglePassword.Name = "btnTogglePassword";
             btnTogglePassword.Size = new Size(48, 40);
             btnTogglePassword.TabIndex = 3;
-            btnTogglePassword.Image = Image.FromFile(@"Resources\закрытый_глаз1.png");
             btnTogglePassword.UseVisualStyleBackColor = false;
             btnTogglePassword.Click += btnTogglePassword_Click;
             // 

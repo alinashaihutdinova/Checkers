@@ -10,14 +10,10 @@
 
   <ItemGroup>
     <None Remove="Resources\закрытый_глаз.png" />
-    <None Remove="Resources\закрытый_глаз1.png" />
     <None Remove="Resources\открытый_глаз.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Resources\закрытый_глаз1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\открытый_глаз.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

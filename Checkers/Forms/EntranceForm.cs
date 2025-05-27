@@ -53,16 +53,14 @@ namespace Checkers
             passwordVisible = !passwordVisible;
             if (passwordVisible)
             {
-                txtPassword.UseSystemPasswordChar = false; // показываем пароль
-                btnTogglePassword.Image = Image.FromFile(@"Resources\открытый_глаз.png");
+                txtPassword.UseSystemPasswordChar = false; 
             }
             else
             {
                 if (txtPassword.Text != "Пароль")
+                {
                     txtPassword.UseSystemPasswordChar = true; // скрываем пароль
-                else
-                    txtPassword.UseSystemPasswordChar = false; 
-                btnTogglePassword.Image = Image.FromFile(@"Resources\закрытый_глаз1.png");
+                }
             }
         }
         private void btnRegister_Click(object sender, EventArgs e)
