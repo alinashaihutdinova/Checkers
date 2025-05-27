@@ -10,6 +10,7 @@ namespace Checkers
     {
         private bool passwordVisible = false;
         private readonly IWindsorContainer _container;
+        private readonly IUserService _userService;
         /// <summary>
         /// конструктор класса с внедрённым контейнером 
         /// </summary>
@@ -18,6 +19,7 @@ namespace Checkers
         {
             InitializeComponent();
             _container = container;
+            _userService = _container.Resolve<IUserService>();
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
@@ -35,16 +37,13 @@ namespace Checkers
                 MessageBox.Show("Пожалуйста, введите пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            var userService = _container.Resolve<IUserService>();
-            var user = userService.Authenticate(login, password);
-
+            var user = _userService.Authenticate(login, password);
             if (user == null)
             {
                 MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var mainForm = new MainForm(userService);
+            var mainForm = new MainForm(_userService);
             mainForm.Show();
             this.Hide();
         }
@@ -65,7 +64,7 @@ namespace Checkers
         }
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            var registrationForm = new RegistrationForm(_container.Resolve<IUserService>());
+            var registrationForm = new RegistrationForm(_container);
             registrationForm.Show();
             this.Hide();
         }

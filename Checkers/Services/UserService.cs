@@ -41,5 +41,16 @@ namespace Checkers.Services
                 return sb.ToString();
             }
         }
+        /// <summary>
+        /// сохраняет пользователя в бд
+        /// </summary>
+        public void RegisterUser(User user)
+        {
+            if (_context.Users.Any(u => u.Login == user.Login))
+                throw new Exception("Пользователь с таким логином уже существует");
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
+        }
     }
 }
