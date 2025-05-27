@@ -53,20 +53,16 @@ namespace Checkers
             passwordVisible = !passwordVisible;
             if (passwordVisible)
             {
-                txtPassword.UseSystemPasswordChar = false; //отключаем маскировку символов
-                btnTogglePassword.Text = "??"; 
+                txtPassword.UseSystemPasswordChar = false; // показываем пароль
+                btnTogglePassword.Image = Image.FromFile(@"Resources\открытый_глаз.png");
             }
             else
             {
-                if (txtPassword.Text == "Пароль")
-                {
-                    txtPassword.UseSystemPasswordChar = false; //оставляем текст видимым
-                }
+                if (txtPassword.Text != "Пароль")
+                    txtPassword.UseSystemPasswordChar = true; // скрываем пароль
                 else
-                {
-                    txtPassword.UseSystemPasswordChar = true; //включаем маскировку 
-                }
-                btnTogglePassword.Text = "??"; //пока так, не получается найти закрытый глаз
+                    txtPassword.UseSystemPasswordChar = false; 
+                btnTogglePassword.Image = Image.FromFile(@"Resources\закрытый_глаз1.png");
             }
         }
         private void btnRegister_Click(object sender, EventArgs e)
@@ -92,6 +88,11 @@ namespace Checkers
                 txtPassword.Text = "Пароль";
                 txtPassword.ForeColor = Color.Gray;
             }
+        }
+
+        private void EntranceForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
