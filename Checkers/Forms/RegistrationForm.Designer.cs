@@ -62,33 +62,34 @@ namespace Checkers.Forms
             // txtLogin
             // 
             txtLogin.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtLogin.Font = new Font("Arial Rounded MT Bold", 14F);
+            txtLogin.Font = new Font("Arial Rounded MT Bold", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtLogin.ForeColor = Color.Black;
-            txtLogin.Location = new Point(65, 82);
+            txtLogin.Location = new Point(36, 82);
             txtLogin.Name = "txtLogin";
-            txtLogin.Size = new Size(389, 40);
+            txtLogin.Size = new Size(448, 45);
             txtLogin.TabIndex = 1;
             txtLogin.Text = "Логин";
             // 
             // txtPassword
             // 
             txtPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtPassword.Font = new Font("Arial", 14F, FontStyle.Bold);
+            txtPassword.Font = new Font("Arial Narrow", 16F, FontStyle.Bold);
             txtPassword.ForeColor = Color.Black;
-            txtPassword.Location = new Point(65, 155);
+            txtPassword.Location = new Point(37, 166);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(389, 40);
+            txtPassword.Size = new Size(448, 44);
             txtPassword.TabIndex = 2;
             txtPassword.Text = "Пароль";
+            txtPassword.TextChanged += txtPassword_TextChanged;
             // 
             // txtRepeatpassword
             // 
             txtRepeatpassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtRepeatpassword.Font = new Font("Arial", 14F, FontStyle.Bold);
+            txtRepeatpassword.Font = new Font("Arial Narrow", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
             txtRepeatpassword.ForeColor = Color.Black;
-            txtRepeatpassword.Location = new Point(65, 258);
+            txtRepeatpassword.Location = new Point(37, 288);
             txtRepeatpassword.Name = "txtRepeatpassword";
-            txtRepeatpassword.Size = new Size(389, 40);
+            txtRepeatpassword.Size = new Size(448, 44);
             txtRepeatpassword.TabIndex = 3;
             txtRepeatpassword.Text = "Подтверждение пароля";
             // 
@@ -100,7 +101,7 @@ namespace Checkers.Forms
             btnRegister.FlatStyle = FlatStyle.Flat;
             btnRegister.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
             btnRegister.ForeColor = Color.White;
-            btnRegister.Location = new Point(363, 340);
+            btnRegister.Location = new Point(363, 383);
             btnRegister.Name = "btnRegister";
             btnRegister.Size = new Size(312, 46);
             btnRegister.TabIndex = 4;
@@ -116,7 +117,7 @@ namespace Checkers.Forms
             btnBack.FlatStyle = FlatStyle.Flat;
             btnBack.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
             btnBack.ForeColor = Color.White;
-            btnBack.Location = new Point(363, 414);
+            btnBack.Location = new Point(363, 459);
             btnBack.Name = "btnBack";
             btnBack.Size = new Size(312, 46);
             btnBack.TabIndex = 5;
@@ -138,9 +139,9 @@ namespace Checkers.Forms
             lightpanel.Controls.Add(txtLogin);
             lightpanel.Controls.Add(txtRepeatpassword);
             lightpanel.Controls.Add(btnRegister);
-            lightpanel.Location = new Point(90, 68);
+            lightpanel.Location = new Point(90, 49);
             lightpanel.Name = "lightpanel";
-            lightpanel.Size = new Size(1021, 507);
+            lightpanel.Size = new Size(1021, 541);
             lightpanel.TabIndex = 6;
             // 
             // btnTogglePassword2
@@ -151,9 +152,9 @@ namespace Checkers.Forms
             btnTogglePassword2.BackgroundImageLayout = ImageLayout.Stretch;
             btnTogglePassword2.FlatAppearance.BorderSize = 0;
             btnTogglePassword2.FlatStyle = FlatStyle.Flat;
-            btnTogglePassword2.Location = new Point(414, 258);
+            btnTogglePassword2.Location = new Point(447, 295);
             btnTogglePassword2.Name = "btnTogglePassword2";
-            btnTogglePassword2.Size = new Size(40, 40);
+            btnTogglePassword2.Size = new Size(37, 37);
             btnTogglePassword2.TabIndex = 8;
             btnTogglePassword2.UseVisualStyleBackColor = true;
             btnTogglePassword2.Click += btnTogglePassword2_Click;
@@ -162,7 +163,7 @@ namespace Checkers.Forms
             // 
             btnUploudphoto.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             btnUploudphoto.Font = new Font("Arial", 9F);
-            btnUploudphoto.Location = new Point(669, 181);
+            btnUploudphoto.Location = new Point(658, 190);
             btnUploudphoto.Name = "btnUploudphoto";
             btnUploudphoto.Size = new Size(261, 34);
             btnUploudphoto.TabIndex = 7;
@@ -178,7 +179,7 @@ namespace Checkers.Forms
             btnTogglePassword1.BackgroundImageLayout = ImageLayout.Stretch;
             btnTogglePassword1.FlatAppearance.BorderSize = 0;
             btnTogglePassword1.FlatStyle = FlatStyle.Flat;
-            btnTogglePassword1.Location = new Point(416, 159);
+            btnTogglePassword1.Location = new Point(445, 174);
             btnTogglePassword1.Name = "btnTogglePassword1";
             btnTogglePassword1.Size = new Size(34, 34);
             btnTogglePassword1.TabIndex = 7;
@@ -188,10 +189,11 @@ namespace Checkers.Forms
             // pctrBoxProfile
             // 
             pctrBoxProfile.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pctrBoxProfile.BackColor = SystemColors.Window;
             pctrBoxProfile.BackgroundImageLayout = ImageLayout.Zoom;
-            pctrBoxProfile.Location = new Point(647, 82);
+            pctrBoxProfile.Location = new Point(616, 82);
             pctrBoxProfile.Name = "pctrBoxProfile";
-            pctrBoxProfile.Size = new Size(304, 216);
+            pctrBoxProfile.Size = new Size(345, 250);
             pctrBoxProfile.TabIndex = 6;
             pctrBoxProfile.TabStop = false;
             // 
