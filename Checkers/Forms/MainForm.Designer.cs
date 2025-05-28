@@ -68,6 +68,7 @@
             btnExit.TabIndex = 0;
             btnExit.Text = "Выход";
             btnExit.UseVisualStyleBackColor = false;
+            btnExit.Click += BtnExit_Click;
             // 
             // btnProfile
             // 
@@ -81,6 +82,7 @@
             btnProfile.TabIndex = 0;
             btnProfile.Text = "Профиль";
             btnProfile.UseVisualStyleBackColor = false;
+            btnProfile.Click += BtnProfile_Click;
             // 
             // panel2
             // 
@@ -118,6 +120,7 @@
             btnPlay.TabIndex = 1;
             btnPlay.Text = "Играть";
             btnPlay.UseVisualStyleBackColor = false;
+            btnPlay.Click += BtnPlay_Click;
             // 
             // pctrBoxPlayers
             // 
@@ -214,6 +217,7 @@
             Controls.Add(panel2);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "MainForm";
             Text = "MainForm";
             panel1.ResumeLayout(false);
