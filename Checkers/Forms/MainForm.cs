@@ -30,11 +30,9 @@ namespace Checkers.Forms
         }
         private void BtnPlay_Click(object sender, EventArgs e)
         {
-            /*
             var gameForm = new GameForm(_userService);
             gameForm.Show();
             this.Hide();
-            */
         }
         private void LoadGameHistory()
         {
