@@ -7,5 +7,8 @@ namespace Checkers.Core.Services
         User? Authenticate(string login, string password);
         void RegisterUser(User user);
         string HashPassword(string password);
+        List<Game> GetUserGameHistory(Guid userId);
+        void UpdateUserStats(User user);
+        List<User> GetAllUsersSortedByRating();
     }
 }

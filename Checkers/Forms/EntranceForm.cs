@@ -1,6 +1,7 @@
 using Checkers.Forms;
 using Checkers.Core.Services;
 using Castle.Windsor;
+using Checkers.Services;
 namespace Checkers
 {
     /// <summary>
@@ -11,6 +12,7 @@ namespace Checkers
         private bool passwordVisible = false;
         private readonly IWindsorContainer _container;
         private readonly IUserService _userService;
+        private readonly IGameService _gameService;
         /// <summary>
         /// конструктор класса с внедрённым контейнером 
         /// </summary>
@@ -43,7 +45,7 @@ namespace Checkers
                 MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var mainForm = new MainForm(_userService);
+            var mainForm = new MainForm(_userService, _gameService, user);
             mainForm.Show();
             this.Hide();
         }

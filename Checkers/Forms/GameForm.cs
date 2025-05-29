@@ -9,20 +9,27 @@ namespace Checkers.Forms
     public partial class GameForm : Form
     {
         private readonly IUserService _userService;
-        private Board _board;
+        private readonly IGameService _gameService;
+        private readonly Guid _gameId;
+        private readonly bool _isWhite;
+        private Guid CurrentUserId { get; set; }
+        private Board _board = new();
         private Checker? _selectedChecker;
-        private List<(int, int)> _availableMoves = new List<(int, int)>();
+        private List<(int, int)> _availableMoves = new ();
         private int _timeLeft = 30;
         private System.Windows.Forms.Timer _timer;
         private bool _currentPlayerIsWhite = true;
         /// <summary>
         /// конструктор формы
         /// </summary>
-        public GameForm(IUserService userService)
+        public GameForm(IUserService userService, IGameService gameService, Guid gameId, bool isWhite, Guid currentUserId) 
         {
             InitializeComponent();
             _userService = userService;
-            _board = new Board();
+            _gameService = gameService;
+            _gameId = gameId;
+            _isWhite = isWhite;
+            CurrentUserId = currentUserId;
             _board.InitializeBoard();
             _timer = new System.Windows.Forms.Timer();
             _timer.Interval = 1000; // 1 секунда

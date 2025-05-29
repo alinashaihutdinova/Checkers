@@ -1,6 +1,7 @@
 ﻿using Checkers.Core.Services;
 using Checkers.Core.Entities;
 using Castle.Windsor;
+using Checkers.Services;
 
 namespace Checkers.Forms
 {
@@ -11,6 +12,7 @@ namespace Checkers.Forms
     {
         private readonly IWindsorContainer _container;
         private readonly IUserService _userService;
+        private readonly IGameService _gameService;
         private bool passwordVisible = false;
         /// <summary>
         /// конструктор класса
@@ -54,7 +56,7 @@ namespace Checkers.Forms
                 _userService.RegisterUser(user);
                 MessageBox.Show("Регистрация прошла успешно!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Hide();
-                var mainForm = new MainForm(_userService); // Передаем контейнер в форму входа
+                var mainForm = new MainForm(_userService, _gameService, user); // Передаем контейнер в форму входа
                 mainForm.Show();
             }
             catch (Exception ex)

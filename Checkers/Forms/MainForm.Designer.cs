@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             panel1 = new Panel();
             btnExit = new Button();
             btnProfile = new Button();
             panel2 = new Panel();
+            btnjoingame = new Button();
             lblTitle = new Label();
             btnPlay = new Button();
             pctrBoxPlayers = new PictureBox();
@@ -53,7 +55,7 @@
             panel1.Controls.Add(btnProfile);
             panel1.Location = new Point(33, 12);
             panel1.Name = "panel1";
-            panel1.Size = new Size(429, 412);
+            panel1.Size = new Size(429, 428);
             panel1.TabIndex = 0;
             // 
             // btnExit
@@ -87,13 +89,28 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(40, 20, 0);
+            panel2.Controls.Add(btnjoingame);
             panel2.Controls.Add(lblTitle);
             panel2.Controls.Add(btnPlay);
             panel2.Controls.Add(pctrBoxPlayers);
             panel2.Location = new Point(548, 12);
             panel2.Name = "panel2";
-            panel2.Size = new Size(626, 412);
+            panel2.Size = new Size(626, 428);
             panel2.TabIndex = 0;
+            // 
+            // btnjoingame
+            // 
+            btnjoingame.BackColor = Color.Navy;
+            btnjoingame.FlatStyle = FlatStyle.Popup;
+            btnjoingame.Font = new Font("Arial", 11F, FontStyle.Bold);
+            btnjoingame.ForeColor = Color.White;
+            btnjoingame.Location = new Point(172, 348);
+            btnjoingame.Name = "btnjoingame";
+            btnjoingame.Size = new Size(295, 52);
+            btnjoingame.TabIndex = 3;
+            btnjoingame.Text = "Присоединиться к игре";
+            btnjoingame.UseVisualStyleBackColor = false;
+            btnjoingame.Click += btnjoingame_Click;
             // 
             // lblTitle
             // 
@@ -103,7 +120,7 @@
             lblTitle.ForeColor = Color.FromArgb(226, 199, 153);
             lblTitle.Location = new Point(60, 0);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(523, 55);
+            lblTitle.Size = new Size(523, 50);
             lblTitle.TabIndex = 2;
             lblTitle.Text = "Шашки Онлайн";
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
@@ -114,20 +131,22 @@
             btnPlay.FlatStyle = FlatStyle.Popup;
             btnPlay.Font = new Font("Arial", 11F, FontStyle.Bold);
             btnPlay.ForeColor = Color.White;
-            btnPlay.Location = new Point(235, 307);
+            btnPlay.Location = new Point(233, 290);
             btnPlay.Name = "btnPlay";
             btnPlay.Size = new Size(171, 52);
             btnPlay.TabIndex = 1;
-            btnPlay.Text = "Играть";
+            btnPlay.Text = "Создать игру";
             btnPlay.UseVisualStyleBackColor = false;
             btnPlay.Click += BtnPlay_Click;
             // 
             // pctrBoxPlayers
             // 
             pctrBoxPlayers.BackColor = Color.FromArgb(65, 35, 20);
-            pctrBoxPlayers.Location = new Point(113, 68);
+            pctrBoxPlayers.BackgroundImage = (Image)resources.GetObject("pctrBoxPlayers.BackgroundImage");
+            pctrBoxPlayers.BackgroundImageLayout = ImageLayout.Stretch;
+            pctrBoxPlayers.Location = new Point(159, 61);
             pctrBoxPlayers.Name = "pctrBoxPlayers";
-            pctrBoxPlayers.Size = new Size(407, 315);
+            pctrBoxPlayers.Size = new Size(319, 351);
             pctrBoxPlayers.TabIndex = 0;
             pctrBoxPlayers.TabStop = false;
             // 
@@ -242,5 +261,6 @@
         private Label lblLogin;
         private Label lblWins;
         private Label lblLosses;
+        private Button btnjoingame;
     }
 }
