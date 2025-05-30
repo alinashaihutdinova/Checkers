@@ -49,7 +49,6 @@ namespace Checkers.Forms
                 this.Close();
             }
         }
-
         private void btnendmove_Click(object sender, EventArgs e)
         {
             EndCurrentTurn();

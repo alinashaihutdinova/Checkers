@@ -53,12 +53,12 @@ namespace Checkers.Services
             _context.SaveChanges();
         }
         /// <summary>
-        /// Получает список доступных игр (где нет черного игрока)
+        /// получает список доступных игр (где нет черного игрока)
         /// </summary>
         public List<Game> GetAvailableGames() =>
             _context.Games.Where(g => g.BlackPlayerId == Guid.Empty).ToList();
         /// <summary>
-        /// Создаёт новую игру за белых
+        /// создаёт новую игру за белых
         /// </summary>
         public Game CreateGame(Guid whitePlayerId)
         {
@@ -73,7 +73,7 @@ namespace Checkers.Services
             return game;
         }
         /// <summary>
-        /// Присоединяет игрока к существующей игре за черных
+        /// присоединяет игрока к существующей игре за черных
         /// </summary>
         public bool JoinGame(Guid gameId, Guid blackPlayerId)
         {
@@ -86,7 +86,7 @@ namespace Checkers.Services
             return true;
         }
         /// <summary>
-        /// Сохраняет ход в БД
+        /// сохраняет ход в БД
         /// </summary>
         public void SaveMove(Guid gameId, Guid playerId, string from, string to)
         {
@@ -104,27 +104,45 @@ namespace Checkers.Services
             _context.SaveChanges();
         }
         /// <summary>
-        /// Возвращает историю игр пользователя
+        /// возвращает историю игр пользователя
         /// </summary>
         public List<Game> GetUserGameHistory(Guid userId) =>
             _context.Games
                 .Where(g => g.WhitePlayerId == userId || g.BlackPlayerId == userId)
                 .ToList();
         /// <summary>
-        /// Возвращает список пользователей, отсортированных по рейтингу (по убыванию)
+        /// возвращает список пользователей, отсортированных по рейтингу
         /// </summary>
         public List<User> GetAllUsersSortedByRating()
         {
             return _context.Users
-                .OrderByDescending(u => u.Rating)
+                .AsEnumerable()
+                .OrderByDescending(u => u.Wins * 50 - u.Losses * 30) 
                 .ToList();
         }
         /// <summary>
-        /// Обновляет статистику пользователя после игры
+        /// считает рейтинг
         /// </summary>
-        public void UpdateUserStats(User user)
+        public int CalculateRating(User user)
         {
-            _context.Users.Update(user);
+            return user.Wins * 50 - user.Losses * 30;
+        }
+        /// <summary>
+        /// обновляет статистику пользователя после игры
+        /// </summary>
+        public void UpdateUserStats(Guid userId, bool isWin)
+        {
+            var user = _context.Users.Find(userId);
+            if (user == null) return;
+            user.GamesPlayed++;
+            if (isWin)
+            {
+                user.Wins++;
+            }
+            else
+            {
+                user.Losses++;
+            }
             _context.SaveChanges();
         }
     }

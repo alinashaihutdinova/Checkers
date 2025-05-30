@@ -13,7 +13,6 @@ namespace Checkers.Forms
         /// <summary>
         /// конструктор класса
         /// </summary>
-        /// <param name="userService">сервис аутентификации пользователей</param>
         public MainForm(IUserService userService, IGameService gameService, Core.Entities.User user)
         {
             InitializeComponent();
@@ -39,13 +38,11 @@ namespace Checkers.Forms
             form.Show();
             this.Hide();
         }
-        private void LoadRatingTable()
+        private void LoadRatingTable()//метод для заполнения таблицы рейтинга
         {
             var users = _userService.GetAllUsersSortedByRating();
-            var currentRowCount = tblLayoutPnlHistory.RowCount;
-            for (int i = currentRowCount - 1; i >= 1; i--)
+            for (int i = tblLayoutPnlHistory.RowCount - 1; i >= 1; i--)
             {
-                // Удаляем контроллы из строк данных
                 for (int j = 0; j < 4; j++)
                 {
                     if (tblLayoutPnlHistory.GetControlFromPosition(j, i) is Control control)
@@ -54,10 +51,8 @@ namespace Checkers.Forms
                         control.Dispose();
                     }
                 }
-                // Удаляем стиль строки
                 tblLayoutPnlHistory.RowStyles.RemoveAt(i);
             }
-            // Теперь добавляем новые строки
             int row = 1;
             foreach (var user in users)
             {
@@ -93,28 +88,24 @@ namespace Checkers.Forms
                     ForeColor = Color.White,
                     AutoSize = false
                 };
-                // Добавляем новую строку
                 tblLayoutPnlHistory.RowCount++;
                 tblLayoutPnlHistory.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-                // Добавляем контроллы
                 tblLayoutPnlHistory.Controls.Add(placeLabel, 0, row);
                 tblLayoutPnlHistory.Controls.Add(loginLabel, 1, row);
                 tblLayoutPnlHistory.Controls.Add(winsLabel, 2, row);
                 tblLayoutPnlHistory.Controls.Add(lossesLabel, 3, row);
                 row++;
             }
-
         }
-
         private void btnjoingame_Click(object sender, EventArgs e)
         {
             var availableGames = _gameService.GetAvailableGames();
             if (!availableGames.Any())
             {
-                MessageBox.Show("Нет доступных игр", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("нет доступных игр", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            var gameToJoin = availableGames.First(); // Можно выбрать любую, но пока первую
+            var gameToJoin = availableGames.First(); 
             bool joined = _gameService.JoinGame(gameToJoin.Id, _user.Id);
 
             if (joined)
@@ -125,7 +116,7 @@ namespace Checkers.Forms
             }
             else
             {
-                MessageBox.Show("Не удалось присоединиться к игре", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("не удалось присоединиться к игре", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -20,6 +20,10 @@ namespace Checkers.Data
         /// таблица "moves" в БД
         /// </summary>
         public DbSet<Move> Moves { get; set; }
+        /// <summary>
+        /// таблица "GameHistories" в БД
+        /// </summary>
+        public DbSet<GameHistory> GameHistories { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=mydatabase;Username=postgres;Password=alshnqq");
@@ -27,19 +31,28 @@ namespace Checkers.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasKey(u => u.Id);
-            modelBuilder.Entity<Game>().HasKey(g => g.Id);
-            modelBuilder.Entity<Move>().HasKey(m => m.Id);
+            
             modelBuilder.Entity<Game>()
-                .HasOne(g => g.WhitePlayer)
-                .WithMany(u => u.WhiteGames)
-                .HasForeignKey(g => g.WhitePlayerId)
-                .OnDelete(DeleteBehavior.Restrict); 
+            .HasOne(g => g.WhitePlayer)
+            .WithMany(u => u.WhiteGames)
+            .HasForeignKey(g => g.WhitePlayerId)
+            .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<Game>()
+            .HasOne(g => g.BlackPlayer)
+            .WithMany(u => u.BlackGames)
+            .HasForeignKey(g => g.BlackPlayerId)
+            .OnDelete(DeleteBehavior.Restrict);
+           
+            modelBuilder.Entity<GameHistory>()
+            .HasOne(h => h.User)
+            .WithMany(u => u.GameHistories)
+            .HasForeignKey(h => h.UserId);
 
-            modelBuilder.Entity<Game>()
-                .HasOne(g => g.BlackPlayer)
-                .WithMany(u => u.BlackGames)
-                .HasForeignKey(g => g.BlackPlayerId)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<GameHistory>()
+                .HasOne(h => h.Game)
+                .WithMany()
+                .HasForeignKey(h => h.GameId);
         }
     }
 }

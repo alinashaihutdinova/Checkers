@@ -16,7 +16,6 @@ namespace Checkers
         /// <summary>
         /// конструктор класса с внедрённым контейнером 
         /// </summary>
-        /// <param name="container">контейнер Windsor</param>
         public EntranceForm(IWindsorContainer container)
         {
             InitializeComponent();

@@ -8,7 +8,8 @@ namespace Checkers.Core.Services
         void RegisterUser(User user);
         string HashPassword(string password);
         List<Game> GetUserGameHistory(Guid userId);
-        void UpdateUserStats(User user);
+        void UpdateUserStats(Guid userId, bool isWin);
         List<User> GetAllUsersSortedByRating();
+        int CalculateRating(User user);
     }
 }

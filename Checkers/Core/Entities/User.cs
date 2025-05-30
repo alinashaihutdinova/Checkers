@@ -17,10 +17,7 @@
         /// хэшированный пароль
         /// </summary>
         public string PasswordHash { get; set; } = null!;
-        /// <summary>
-        /// рейтинг, начальный = 1000
-        /// </summary>
-        public int Rating { get; set; } = 1000;
+        
         /// <summary>
         ///колво сыгранных игр
         /// </summary>
@@ -41,5 +38,6 @@
         /// игры, где пользователь играет за чёрных
         /// </summary>
         public List<Game> BlackGames { get; set; } = new();
+        public List<GameHistory> GameHistories { get; set; } = new();
     }
 }

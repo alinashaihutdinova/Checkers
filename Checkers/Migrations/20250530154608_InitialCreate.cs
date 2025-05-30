@@ -17,7 +17,10 @@ namespace Checkers.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Login = table.Column<string>(type: "text", nullable: false),
-                    PasswordHash = table.Column<string>(type: "text", nullable: false)
+                    PasswordHash = table.Column<string>(type: "text", nullable: false),
+                    GamesPlayed = table.Column<int>(type: "integer", nullable: false),
+                    Wins = table.Column<int>(type: "integer", nullable: false),
+                    Losses = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,6 +56,33 @@ namespace Checkers.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GameHistories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    GameId = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsWin = table.Column<bool>(type: "boolean", nullable: false),
+                    PlayedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameHistories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GameHistories_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GameHistories_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Moves",
                 columns: table => new
                 {
@@ -76,6 +106,16 @@ namespace Checkers.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_GameHistories_GameId",
+                table: "GameHistories",
+                column: "GameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameHistories_UserId",
+                table: "GameHistories",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Games_BlackPlayerId",
                 table: "Games",
                 column: "BlackPlayerId");
@@ -94,6 +134,9 @@ namespace Checkers.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "GameHistories");
+
             migrationBuilder.DropTable(
                 name: "Moves");
 

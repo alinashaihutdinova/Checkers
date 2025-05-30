@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Checkers.Migrations
 {
     [DbContext(typeof(CheckersDbContext))]
-    [Migration("20250526193615_InitialCreate")]
+    [Migration("20250530154608_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -55,6 +55,33 @@ namespace Checkers.Migrations
                     b.ToTable("Games");
                 });
 
+            modelBuilder.Entity("Checkers.Core.Entities.GameHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsWin")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("PlayedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("GameHistories");
+                });
+
             modelBuilder.Entity("Checkers.Core.Entities.Move", b =>
                 {
                     b.Property<Guid>("Id")
@@ -95,13 +122,22 @@ namespace Checkers.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<int>("GamesPlayed")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Login")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("Losses")
+                        .HasColumnType("integer");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("Wins")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -127,6 +163,25 @@ namespace Checkers.Migrations
                     b.Navigation("WhitePlayer");
                 });
 
+            modelBuilder.Entity("Checkers.Core.Entities.GameHistory", b =>
+                {
+                    b.HasOne("Checkers.Core.Entities.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Checkers.Core.Entities.User", "User")
+                        .WithMany("GameHistories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Checkers.Core.Entities.Move", b =>
                 {
                     b.HasOne("Checkers.Core.Entities.Game", "Game")
@@ -146,6 +201,8 @@ namespace Checkers.Migrations
             modelBuilder.Entity("Checkers.Core.Entities.User", b =>
                 {
                     b.Navigation("BlackGames");
+
+                    b.Navigation("GameHistories");
 
                     b.Navigation("WhiteGames");
                 });
