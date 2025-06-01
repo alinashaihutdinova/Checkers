@@ -28,12 +28,108 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "ProfileForm";
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProfileForm));
+            paneldark = new Panel();
+            lblLogin = new Label();
+            pnlLight = new Panel();
+            pctruser = new PictureBox();
+            btnback = new Button();
+            lblprofile = new Label();
+            paneldark.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pctruser).BeginInit();
+            SuspendLayout();
+            // 
+            // paneldark
+            // 
+            paneldark.BackColor = Color.FromArgb(40, 20, 0);
+            paneldark.Controls.Add(lblLogin);
+            paneldark.Controls.Add(pnlLight);
+            paneldark.Controls.Add(pctruser);
+            paneldark.Controls.Add(btnback);
+            paneldark.Controls.Add(lblprofile);
+            paneldark.Location = new Point(342, 36);
+            paneldark.Name = "paneldark";
+            paneldark.Size = new Size(506, 571);
+            paneldark.TabIndex = 0;
+            // 
+            // lblLogin
+            // 
+            lblLogin.AutoSize = true;
+            lblLogin.Font = new Font("Segoe UI", 12F);
+            lblLogin.ForeColor = Color.White;
+            lblLogin.Location = new Point(211, 185);
+            lblLogin.Name = "lblLogin";
+            lblLogin.Size = new Size(81, 32);
+            lblLogin.TabIndex = 0;
+            lblLogin.Text = "Логин";
+            // 
+            // pnlLight
+            // 
+            pnlLight.BackColor = Color.FromArgb(100, 64, 44);
+            pnlLight.Location = new Point(87, 238);
+            pnlLight.Name = "pnlLight";
+            pnlLight.Size = new Size(329, 221);
+            pnlLight.TabIndex = 1;
+            // 
+            // pctruser
+            // 
+            pctruser.BackgroundImage = (Image)resources.GetObject("pctruser.BackgroundImage");
+            pctruser.BackgroundImageLayout = ImageLayout.Stretch;
+            pctruser.Location = new Point(188, 57);
+            pctruser.Name = "pctruser";
+            pctruser.Size = new Size(129, 116);
+            pctruser.TabIndex = 2;
+            pctruser.TabStop = false;
+            // 
+            // btnback
+            // 
+            btnback.BackColor = Color.Navy;
+            btnback.FlatStyle = FlatStyle.Popup;
+            btnback.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            btnback.ForeColor = Color.White;
+            btnback.Location = new Point(188, 495);
+            btnback.Name = "btnback";
+            btnback.Size = new Size(129, 42);
+            btnback.TabIndex = 1;
+            btnback.Text = "Назад";
+            btnback.UseVisualStyleBackColor = false;
+            btnback.Click += btnback_Click;
+            // 
+            // lblprofile
+            // 
+            lblprofile.AutoSize = true;
+            lblprofile.Font = new Font("Arial Rounded MT Bold", 19F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblprofile.ForeColor = Color.FromArgb(226, 199, 153);
+            lblprofile.Location = new Point(163, 0);
+            lblprofile.Name = "lblprofile";
+            lblprofile.Size = new Size(182, 44);
+            lblprofile.TabIndex = 0;
+            lblprofile.Text = "Профиль";
+            // 
+            // ProfileForm
+            // 
+            AutoScaleDimensions = new SizeF(144F, 144F);
+            AutoScaleMode = AutoScaleMode.Dpi;
+            BackColor = Color.Tan;
+            ClientSize = new Size(1206, 635);
+            Controls.Add(paneldark);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            Name = "ProfileForm";
+            Text = "ProfileForm";
+            paneldark.ResumeLayout(false);
+            paneldark.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pctruser).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Panel paneldark;
+        private PictureBox pctruser;
+        private Button btnback;
+        private Label lblprofile;
+        private Label lblLogin;
+        private Panel pnlLight;
     }
 }
