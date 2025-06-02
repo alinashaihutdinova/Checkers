@@ -10,6 +10,7 @@ namespace Checkers.Forms
     {
         private readonly IUserService _userService;
         private readonly IGameService _gameService;
+        private readonly Core.Entities.User _user;
         private readonly Guid _gameId;
         private readonly bool _isWhite;
         private Guid CurrentUserId { get; set; }
@@ -36,6 +37,7 @@ namespace Checkers.Forms
             _timer.Tick += MoveTimer;
             _timer.Start();
             UpdatePlayerInfo();
+            LoadGameFromDatabase();
         }
 
         private void btngiveup_Click(object sender, EventArgs e)
@@ -43,9 +45,11 @@ namespace Checkers.Forms
             var result = MessageBox.Show("Вы действительно хотите сдаться?","Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
+                _gameService.EndGame(_gameId, _isWhite ? "Black" : "White");
                 _timer.Stop();
                 MessageBox.Show("Игра окончена. Вы сдались.","Игра окончена", MessageBoxButtons.OK, MessageBoxIcon.Information);
-          
+                var mainForm = new MainForm(_userService, _gameService, _user);
+                mainForm.Show();
                 this.Close();
             }
         }
@@ -53,7 +57,6 @@ namespace Checkers.Forms
         {
             EndCurrentTurn();
         }
-
         private void checkersboardpnl_Paint(object sender, PaintEventArgs e)//рисуем  доску
         {
             var panel = sender as Panel;
@@ -64,38 +67,35 @@ namespace Checkers.Forms
                 for (var col = 0; col < 8; col++)
                 {
                     var rect = new Rectangle(col * cellSize, row * cellSize, cellSize, cellSize);
-                    using (var brush = new SolidBrush(row % 2 == col % 2 ? Color.SaddleBrown : Color.Beige))
-                    {
-                        e.Graphics.FillRectangle(brush, rect);
-                    }
+                    Brush backgroundBrush = (row % 2 == col % 2) ? Brushes.SaddleBrown : Brushes.Beige;
+                    e.Graphics.FillRectangle(backgroundBrush, rect);
+
                     // подсветка доступных ходов 
                     if (_availableMoves != null && _availableMoves.Contains((col, row)))
                     {
-                        using (var highlightBrush = new SolidBrush(Color.LightGreen)) 
+                        e.Graphics.FillRectangle(Brushes.LightGreen, rect);
+                        using (Pen greenPen = new Pen(Color.Green, 3))
                         {
-                            e.Graphics.FillRectangle(highlightBrush, rect);
-                        }
-                        using (var pen = new Pen(Color.Green, 3))
-                        {
-                            e.Graphics.DrawRectangle(pen, rect);
+                            e.Graphics.DrawRectangle(greenPen, rect);
                         }
                     }
                     var checker = _board.Squares[col, row];
                     if (checker != null)
                     {
-                        using (var checkerBrush = new SolidBrush(checker.IsWhite ? Color.White : Color.Black))//рисуем шашку
+                        Color checkerColor = checker.IsWhite ? Color.White : Color.Black;
+                        using (Brush checkerBrush = new SolidBrush(checkerColor))
                         {
                             e.Graphics.FillEllipse(checkerBrush, col * cellSize + 5, row * cellSize + 5, cellSize - 10, cellSize - 10);
                         }
                     }
                     if (checker != null && checker.IsKing)//корона для дамки
                     {
-                        using (var crownBrush = new SolidBrush(checker.IsWhite ? Color.Gold : Color.Silver))
+                        Color crownColor = checker.IsWhite ? Color.Gold : Color.Silver;
+                        using (Brush crownBrush = new SolidBrush(crownColor))
                         {
-                            var crownSize = cellSize / 4;
-                            var crownX = col * cellSize + cellSize / 2 - crownSize / 2;
-                            var crownY = row * cellSize + cellSize / 2 - crownSize / 2;
-
+                            int crownSize = cellSize / 4;
+                            int crownX = col * cellSize + cellSize / 2 - crownSize / 2;
+                            int crownY = row * cellSize + cellSize / 2 - crownSize / 2;
                             e.Graphics.FillEllipse(crownBrush, crownX, crownY, crownSize, crownSize);
                         }
                     }
@@ -110,7 +110,7 @@ namespace Checkers.Forms
             if (x < 0 || x >= 8 || y < 0 || y >= 8) 
                 return;
             var checker = _board.Squares[x, y];
-            if (_selectedChecker == null)
+            if (_selectedChecker == null)//если шашка не выбрана
             {
                 if (checker != null && checker.IsWhite == _currentPlayerIsWhite) 
                 {
@@ -119,7 +119,7 @@ namespace Checkers.Forms
                     checkersboardpnl.Invalidate();
                 }
             }
-            else
+            else//если выбрана
             {
                 if (_availableMoves.Contains((x, y)))
                 {
@@ -127,7 +127,7 @@ namespace Checkers.Forms
                     {
                         if ((_selectedChecker.IsWhite && y == 0) || (!_selectedChecker.IsWhite && y == 7))
                         {
-                            _selectedChecker.IsKing = true;
+                            _selectedChecker.IsKing = true;//превращение в дамку
                         }
                         _selectedChecker = null;
                         _availableMoves.Clear();
@@ -183,6 +183,26 @@ namespace Checkers.Forms
             _timeLeft = 30; 
             UpdatePlayerInfo();
             checkersboardpnl.Invalidate();
+        }
+        private void LoadGameFromDatabase()
+        {
+            var game = _gameService.GetGameWithMoves(_gameId);
+            _board = new Board();
+
+            // Первоначальная расстановка
+            _board.InitializeBoard();
+            foreach (var move in game.Moves.OrderBy(m => m.MoveNumber))
+            {
+                var from = move.FromPosition.Split(',').Select(int.Parse).ToArray();
+                var to = move.ToPosition.Split(',').Select(int.Parse).ToArray();
+
+                var checker = _board.Squares[from[0], from[1]];
+                if (checker != null)
+                {
+                    _board.MoveChecker(checker, to[0], to[1]);
+                }
+            }
+            checkersboardpnl.Invalidate(); // перерисовываем доску
         }
     }
 }

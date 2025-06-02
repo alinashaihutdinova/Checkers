@@ -21,6 +21,7 @@ namespace Checkers
             InitializeComponent();
             _container = container;
             _userService = _container.Resolve<IUserService>();
+            _gameService = _container.Resolve<IGameService>();
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {

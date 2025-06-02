@@ -20,7 +20,7 @@
         /// <summary>
         /// айди игрока за чёрных
         /// </summary>
-        public Guid BlackPlayerId { get; set; }
+        public Guid ? BlackPlayerId { get; set; }
         /// <summary>
         /// игрок за чёрных
         /// </summary>
@@ -41,5 +41,6 @@
         /// список ходов в игре
         /// </summary>
         public List<Move> Moves { get; set; } = new();
+        public string Status { get; set; } = "Waiting";
     }
 }

@@ -111,25 +111,25 @@ namespace Checkers.Classes
             var deltaY = Math.Sign(targetY - king.Y);
             var currentX = king.X + deltaX;
             var currentY = king.Y + deltaY;
-            var enemyCount = 0;
+            Checker? capturedChecker = null;
             while (currentX != targetX && currentY != targetY)
             {
-                var checkerOnPath = Squares[currentX, currentY];
-                if (checkerOnPath != null)
+                var checker = Squares[currentX, currentY];
+                if (checker != null)
                 {
-                    if (checkerOnPath.IsWhite == king.IsWhite)
-                        return false; 
-                    else
-                    {
-                        enemyCount++;
-                        if (enemyCount > 1)
-                            return false; 
-                    }
+                    if (checker.IsWhite == king.IsWhite)
+                        return false;
+                    if (capturedChecker != null)
+                        return false; // уже взяли одну шашку
+                    capturedChecker = checker;
                 }
                 currentX += deltaX;
                 currentY += deltaY;
             }
-
+            if (Squares[targetX, targetY] != null && Squares[targetX, targetY].IsWhite == king.IsWhite)
+            {
+                return false; // нельзя ставить на свою же фигуру
+            }
             return true;
         }
         /// <summary>
@@ -165,8 +165,9 @@ namespace Checkers.Classes
             }
             else//для обычной шашки
             {
-                var direction = checker.IsWhite ? -1 : 1; 
-                for (var dx = -1; dx <= 1; dx += 2)
+                var direction = checker.IsWhite ? -1 : 1;
+                int[] dxValues = { -1, 1 };
+                foreach (int dx in dxValues)
                 {
                     var targetX = checker.X + dx;
                     var targetY = checker.Y + direction;
@@ -175,7 +176,7 @@ namespace Checkers.Classes
                         availableMoves.Add((targetX, targetY));
                     }
                 }
-                for (var dx = -1; dx <= 1; dx += 2)//проверка на захваты
+                foreach (int dx in dxValues)//захваты
                 {
                     var targetX = checker.X + dx * 2;
                     var targetY = checker.Y + direction * 2;

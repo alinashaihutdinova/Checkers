@@ -27,5 +27,11 @@ namespace Checkers.Core.Services
         /// Сохраняет ход в БД
         /// </summary>
         void SaveMove(Guid gameId, Guid playerId, string from, string to);
+        /// <summary>
+        /// 
+        /// </summary>
+        Game GetGameWithMoves(Guid gameId);
+        bool IsPlayersTurn(Guid gameId, Guid userId);
+        void EndGame(Guid gameId, string winnerColor);
     }
 }

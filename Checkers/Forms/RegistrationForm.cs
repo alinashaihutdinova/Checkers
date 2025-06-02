@@ -21,6 +21,7 @@ namespace Checkers.Forms
             InitializeComponent();
             _container = container;
             _userService = _container.Resolve<IUserService>();
+            _gameService = _container.Resolve<IGameService>();
         }
         private void BtnRegister_Click(object sender, EventArgs e)
         {

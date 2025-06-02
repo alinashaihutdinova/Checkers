@@ -35,25 +35,28 @@ namespace Checkers.Forms
         {
             var game = _gameService.CreateGame(_user.Id);
             var form = new GameForm(_userService, _gameService, game.Id, isWhite: true, currentUserId: _user.Id);
+            form.FormClosed += formClosed;
             form.Show();
             this.Hide();
         }
         private void LoadRatingTable()//метод для заполнения таблицы рейтинга
         {
             var users = _userService.GetAllUsersSortedByRating();
-            for (int i = tblLayoutPnlHistory.RowCount - 1; i >= 1; i--)
+            while (tblLayoutPnlHistory.RowCount > 1)
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    if (tblLayoutPnlHistory.GetControlFromPosition(j, i) is Control control)
+                    var control = tblLayoutPnlHistory.GetControlFromPosition(j, 1);
+                    if (control != null)
                     {
                         tblLayoutPnlHistory.Controls.Remove(control);
                         control.Dispose();
                     }
                 }
-                tblLayoutPnlHistory.RowStyles.RemoveAt(i);
+                tblLayoutPnlHistory.RowCount--;
+                tblLayoutPnlHistory.RowStyles.RemoveAt(1);
             }
-            int row = 1;
+            var row = 1;
             foreach (var user in users)
             {
                 var placeLabel = new Label
@@ -96,6 +99,10 @@ namespace Checkers.Forms
                 tblLayoutPnlHistory.Controls.Add(lossesLabel, 3, row);
                 row++;
             }
+        }
+        private void formClosed(object sender, FormClosedEventArgs e)
+        {
+            LoadRatingTable();
         }
         private void btnjoingame_Click(object sender, EventArgs e)
         {

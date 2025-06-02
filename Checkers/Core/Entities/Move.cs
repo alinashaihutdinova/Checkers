@@ -13,7 +13,7 @@ namespace Checkers.Core.Entities
         /// <summary>
         /// айди игры, к которой относится ход
         /// </summary>
-        public Guid GameId { get; set; } = Guid.NewGuid();
+        public Guid GameId { get; set; } 
         /// <summary>
         /// ссылка на игру
         /// </summary>

@@ -9,13 +9,15 @@ namespace Checkers.Services
     /// </summary>
     public class UserService : IUserService
     {
+        private readonly IGameService _gameService;
         private readonly CheckersDbContext _context;
         /// <summary>
         /// инициализирует новый экземпляр сервиса с указанием контекста бд
         /// </summary>
-        public UserService(CheckersDbContext context)
+        public UserService(CheckersDbContext context, IGameService gameService)
         {
             _context = context;
+            _gameService = gameService;
         }
         /// <summary>
         /// аутентифицирует пользователя по его логину и паролю
@@ -50,57 +52,6 @@ namespace Checkers.Services
                 throw new Exception("Пользователь с таким логином уже существует");
 
             _context.Users.Add(user);
-            _context.SaveChanges();
-        }
-        /// <summary>
-        /// получает список доступных игр (где нет черного игрока)
-        /// </summary>
-        public List<Game> GetAvailableGames() =>
-            _context.Games.Where(g => g.BlackPlayerId == Guid.Empty).ToList();
-        /// <summary>
-        /// создаёт новую игру за белых
-        /// </summary>
-        public Game CreateGame(Guid whitePlayerId)
-        {
-            var game = new Game
-            {
-                Id = Guid.NewGuid(),
-                WhitePlayerId = whitePlayerId,
-                StartedAt = DateTime.Now
-            };
-            _context.Games.Add(game);
-            _context.SaveChanges();
-            return game;
-        }
-        /// <summary>
-        /// присоединяет игрока к существующей игре за черных
-        /// </summary>
-        public bool JoinGame(Guid gameId, Guid blackPlayerId)
-        {
-            var game = _context.Games.Find(gameId);
-            if (game is null || game.BlackPlayerId != Guid.Empty || game.WhitePlayerId == blackPlayerId)
-                return false;
-
-            game.BlackPlayerId = blackPlayerId;
-            _context.SaveChanges();
-            return true;
-        }
-        /// <summary>
-        /// сохраняет ход в БД
-        /// </summary>
-        public void SaveMove(Guid gameId, Guid playerId, string from, string to)
-        {
-            var move = new Move
-            {
-                Id = Guid.NewGuid(),
-                GameId = gameId,
-                PlayerColor = _context.Users.Find(playerId)?.Login ?? "Unknown",
-                FromPosition = from,
-                ToPosition = to,
-                CreatedAt = DateTime.Now
-            };
-
-            _context.Moves.Add(move);
             _context.SaveChanges();
         }
         /// <summary>

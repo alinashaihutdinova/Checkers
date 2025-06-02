@@ -6,10 +6,6 @@ namespace Checkers.Classes
     /// </summary>
     public class Checker
     {
-        // <summary>
-        /// айди шашки
-        /// </summary>
-        public Guid Id { get; set; } = Guid.NewGuid();
         /// <summary>
         /// является ли шашка дамкой
         /// </summary>
