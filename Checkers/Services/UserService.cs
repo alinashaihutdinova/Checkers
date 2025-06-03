@@ -9,15 +9,13 @@ namespace Checkers.Services
     /// </summary>
     public class UserService : IUserService
     {
-        private readonly IGameService _gameService;
         private readonly CheckersDbContext _context;
         /// <summary>
         /// инициализирует новый экземпляр сервиса с указанием контекста бд
         /// </summary>
-        public UserService(CheckersDbContext context, IGameService gameService)
+        public UserService(CheckersDbContext context)
         {
             _context = context;
-            _gameService = gameService;
         }
         /// <summary>
         /// аутентифицирует пользователя по его логину и паролю

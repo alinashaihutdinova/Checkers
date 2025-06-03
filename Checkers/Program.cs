@@ -21,9 +21,9 @@ namespace Checkers
 
             var container = new WindsorContainer();
             container.Register(
-                Component.For<CheckersDbContext>().LifestyleSingleton(),
-                Component.For<IUserService>().ImplementedBy<UserService>().LifestyleSingleton(),
-                Component.For<IGameService>().ImplementedBy<GameService>().LifestyleSingleton()
+                Component.For<CheckersDbContext>().LifestyleTransient(),
+                Component.For<IUserService>().ImplementedBy<UserService>().LifestyleTransient(),
+                Component.For<IGameService>().ImplementedBy<GameService>().LifestyleTransient()
             );
             var entranceForm = new EntranceForm(container);
             Application.Run(entranceForm);

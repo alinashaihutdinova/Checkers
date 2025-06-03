@@ -8,11 +8,9 @@ namespace Checkers.Services
     public class GameService : IGameService
     {
         private readonly CheckersDbContext _context;
-        private readonly IUserService _userService;
-        public GameService(CheckersDbContext context, IUserService userService)
+        public GameService(CheckersDbContext context)
         {
             _context = context;
-            _userService = userService;
         }
         public List<Game> GetAvailableGames()
         {
@@ -77,11 +75,14 @@ namespace Checkers.Services
         }
         public Game GetGameWithMoves(Guid gameId)
         {
-            return _context.Games
-                .Include(g => g.WhitePlayer)
-                .Include(g => g.BlackPlayer)
-                .Include(g => g.Moves)
-                .FirstOrDefault(g => g.Id == gameId);
+            using (var freshContext = new CheckersDbContext())
+            {
+                return freshContext.Games
+                    .Include(g => g.WhitePlayer)
+                    .Include(g => g.BlackPlayer)
+                    .Include(g => g.Moves)
+                    .FirstOrDefault(g => g.Id == gameId);
+            }
         }
         public bool IsPlayersTurn(Guid gameId, Guid userId)
         {
@@ -113,8 +114,19 @@ namespace Checkers.Services
                 winnerId = game.BlackPlayerId.Value; 
                 loserId = game.WhitePlayerId; 
             }
-            _userService.UpdateUserStats(winnerId, isWin: true);//плюс победа 
-            _userService.UpdateUserStats(loserId, isWin: false);//плюс поражение
+            var winner = _context.Users.Find(winnerId);
+            var loser = _context.Users.Find(loserId);
+            if (winner != null)
+            {
+                winner.GamesPlayed++;
+                winner.Wins++;
+            }
+
+            if (loser != null)
+            {
+                loser.GamesPlayed++;
+                loser.Losses++;
+            }
             _context.SaveChanges();
         }
     }

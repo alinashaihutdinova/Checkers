@@ -20,6 +20,9 @@ namespace Checkers.Forms
         private int _timeLeft = 30;
         private System.Windows.Forms.Timer _timer;
         private bool _currentPlayerIsWhite = true;
+        private int _lastMoveCount = 0;
+        private System.Windows.Forms.Timer _dbPollingTimer;
+
         /// <summary>
         /// конструктор формы
         /// </summary>
@@ -31,15 +34,32 @@ namespace Checkers.Forms
             _gameId = gameId;
             _isWhite = isWhite;
             CurrentUserId = currentUserId;
+            InitializeBoard();
+            InitializeTimers();
+            LoadAndStartGame();
+        }
+        private void InitializeBoard()
+        {
+            _board = new Board();
             _board.InitializeBoard();
-            _timer = new System.Windows.Forms.Timer();
-            _timer.Interval = 1000; // 1 секунда
+        }
+        private void InitializeTimers()
+        {
+            _timer = new System.Windows.Forms.Timer { Interval = 1000 };
             _timer.Tick += MoveTimer;
             _timer.Start();
+
+            _dbPollingTimer = new System.Windows.Forms.Timer { Interval = 2000 };
+            _dbPollingTimer.Tick += RefreshBoardIfUpdated;
+            _dbPollingTimer.Start();
+        }
+        private void LoadAndStartGame()
+        {
             UpdatePlayerInfo();
             LoadGameFromDatabase();
+            var game = _gameService.GetGameWithMoves(_gameId);
+            _lastMoveCount = game.Moves.Count;
         }
-
         private void btngiveup_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show("Вы действительно хотите сдаться?","Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -109,6 +129,11 @@ namespace Checkers.Forms
             var y = e.Y / squareSize;
             if (x < 0 || x >= 8 || y < 0 || y >= 8) 
                 return;
+            if (!_gameService.IsPlayersTurn(_gameId, CurrentUserId))
+            {
+                MessageBox.Show("Сейчас не ваш ход", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             var checker = _board.Squares[x, y];
             if (_selectedChecker == null)//если шашка не выбрана
             {
@@ -129,6 +154,7 @@ namespace Checkers.Forms
                         {
                             _selectedChecker.IsKing = true;//превращение в дамку
                         }
+                        _gameService.SaveMove(_gameId, CurrentUserId, $"{_selectedChecker.X},{_selectedChecker.Y}", $"{x},{y}");
                         _selectedChecker = null;
                         _availableMoves.Clear();
                         EndCurrentTurn();
@@ -188,8 +214,6 @@ namespace Checkers.Forms
         {
             var game = _gameService.GetGameWithMoves(_gameId);
             _board = new Board();
-
-            // Первоначальная расстановка
             _board.InitializeBoard();
             foreach (var move in game.Moves.OrderBy(m => m.MoveNumber))
             {
@@ -202,7 +226,16 @@ namespace Checkers.Forms
                     _board.MoveChecker(checker, to[0], to[1]);
                 }
             }
-            checkersboardpnl.Invalidate(); // перерисовываем доску
+            checkersboardpnl.Invalidate(); 
+        }
+        private void RefreshBoardIfUpdated(object sender, EventArgs e)
+        {
+            var game = _gameService.GetGameWithMoves(_gameId);
+            if (game.Moves.Count > _lastMoveCount)
+            {
+                LoadGameFromDatabase(); // перезагружаем доску
+                _lastMoveCount = game.Moves.Count;
+            }
         }
     }
 }
