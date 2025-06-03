@@ -147,7 +147,6 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "EntranceForm";
             Text = "EntranceForm";
-            Load += EntranceForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

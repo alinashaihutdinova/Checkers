@@ -80,7 +80,6 @@ namespace Checkers.Forms
             txtPassword.Size = new Size(448, 44);
             txtPassword.TabIndex = 2;
             txtPassword.Text = "Пароль";
-            txtPassword.TextChanged += txtPassword_TextChanged;
             // 
             // txtRepeatpassword
             // 

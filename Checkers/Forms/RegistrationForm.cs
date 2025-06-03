@@ -110,14 +110,5 @@ namespace Checkers.Forms
                 }
             }
         }
-        private void pctrBoxProfile_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtPassword_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

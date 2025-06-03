@@ -23,9 +23,9 @@ namespace Checkers.Forms
         }
         private void BtnProfile_Click(object sender, EventArgs e)
         {
-            /*var profileForm = new ProfileForm(_userService);
+            var profileForm = new ProfileForm(_userService, _user);
             profileForm.Show();
-            this.Hide();*/
+            this.Hide();
         }
         private void BtnExit_Click(object sender, EventArgs e)
         {

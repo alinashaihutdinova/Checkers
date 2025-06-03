@@ -10,12 +10,15 @@ namespace Checkers.Forms
     {
         private readonly IUserService _userService;
         private readonly IGameService _gameService;
+        private readonly User _user;
         /// <summary>
         /// конструктор класса 
         /// </summary>
-        public ProfileForm()
+        public ProfileForm(IUserService userService, User user)
         {
             InitializeComponent();
+            _userService = userService;
+            _user = user;
         }
 
         private void btnback_Click(object sender, EventArgs e)

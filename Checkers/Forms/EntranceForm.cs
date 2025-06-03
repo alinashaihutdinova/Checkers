@@ -1,7 +1,6 @@
 using Checkers.Forms;
 using Checkers.Core.Services;
 using Castle.Windsor;
-using Checkers.Services;
 namespace Checkers
 {
     /// <summary>
@@ -87,11 +86,6 @@ namespace Checkers
                 txtPassword.Text = "Пароль";
                 txtPassword.ForeColor = Color.Gray;
             }
-        }
-
-        private void EntranceForm_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
