@@ -1,5 +1,6 @@
 ﻿using Checkers.Classes;
 using Checkers.Core.Services;
+using NLog;
 
 namespace Checkers.Forms
 {
@@ -22,11 +23,12 @@ namespace Checkers.Forms
         private bool _currentPlayerIsWhite = true;
         private int _lastMoveCount = 0;
         private System.Windows.Forms.Timer _dbPollingTimer;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// конструктор формы
         /// </summary>
-        public GameForm(IUserService userService, IGameService gameService, Guid gameId, bool isWhite, Guid currentUserId) 
+        public GameForm(IUserService userService, IGameService gameService, Guid gameId, bool isWhite, Guid currentUserId)
         {
             InitializeComponent();
             _userService = userService;
@@ -37,11 +39,13 @@ namespace Checkers.Forms
             InitializeBoard();
             InitializeTimers();
             LoadAndStartGame();
+            _logger.Info($"Игровая форма запущена. Игра ID: {_gameId}, Цвет игрока: {(_isWhite ? "Белый" : "Чёрный")}");
         }
         private void InitializeBoard()
         {
             _board = new Board();
             _board.InitializeBoard();
+            _logger.Debug("Доска инициализирована");
         }
         private void InitializeTimers()
         {
@@ -52,6 +56,7 @@ namespace Checkers.Forms
             _dbPollingTimer = new System.Windows.Forms.Timer { Interval = 2000 };
             _dbPollingTimer.Tick += RefreshBoardIfUpdated;
             _dbPollingTimer.Start();
+            _logger.Debug("Таймеры запущены");
         }
         private void LoadAndStartGame()
         {
@@ -59,9 +64,11 @@ namespace Checkers.Forms
             LoadGameFromDatabase();
             var game = _gameService.GetGameWithMoves(_gameId);
             _lastMoveCount = game.Moves.Count;
+            _logger.Info($"Игра загружена. Количество ходов: {_lastMoveCount}");
         }
         private void btngiveup_Click(object sender, EventArgs e)
         {
+            _logger.Warn($"Пользователь сдался. Игра ID: {_gameId}");
             var result = MessageBox.Show("Вы действительно хотите сдаться?","Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
@@ -75,6 +82,7 @@ namespace Checkers.Forms
         }
         private void btnendmove_Click(object sender, EventArgs e)
         {
+            _logger.Debug("Ход завершён вручную");
             EndCurrentTurn();
         }
         private void checkersboardpnl_Paint(object sender, PaintEventArgs e)//рисуем  доску
@@ -127,10 +135,14 @@ namespace Checkers.Forms
             var squareSize = checkersboardpnl.Width / 8;
             var x = e.X / squareSize;
             var y = e.Y / squareSize;
-            if (x < 0 || x >= 8 || y < 0 || y >= 8) 
+            if (x < 0 || x >= 8 || y < 0 || y >= 8)
+            {
+                _logger.Debug($"Клик вне доски: ({x},{y})");
                 return;
+            }
             if (!_gameService.IsPlayersTurn(_gameId, CurrentUserId))
             {
+                _logger.Warn($"Игрок ID: {CurrentUserId} попытался сделать ход вне своей очереди");
                 MessageBox.Show("Сейчас не ваш ход", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -139,6 +151,7 @@ namespace Checkers.Forms
             {
                 if (checker != null && checker.IsWhite == _currentPlayerIsWhite) 
                 {
+                    _logger.Debug($"Игрок выбрал шашку на позиции ({x},{y})");
                     _selectedChecker = checker;
                     _availableMoves = _board.GetAvailableMoves(checker);
                     checkersboardpnl.Invalidate();
@@ -148,13 +161,16 @@ namespace Checkers.Forms
             {
                 if (_availableMoves.Contains((x, y)))
                 {
+                    _logger.Debug($"Игрок делает ход из ({_selectedChecker.X},{_selectedChecker.Y}) в ({x},{y})");
                     if (_board.MoveChecker(_selectedChecker, x, y))
                     {
                         if ((_selectedChecker.IsWhite && y == 0) || (!_selectedChecker.IsWhite && y == 7))
                         {
                             _selectedChecker.IsKing = true;//превращение в дамку
+                            _logger.Info($"Шашка стала дамкой на позиции ({x},{y})");
                         }
                         _gameService.SaveMove(_gameId, CurrentUserId, $"{_selectedChecker.X},{_selectedChecker.Y}", $"{x},{y}");
+                        _logger.Info($"Ход сохранён: ({_selectedChecker.X},{_selectedChecker.Y}), ({x},{y})");
                         _selectedChecker = null;
                         _availableMoves.Clear();
                         EndCurrentTurn();
@@ -162,12 +178,14 @@ namespace Checkers.Forms
                 }
                 else if (checker != null && checker.IsWhite == _currentPlayerIsWhite)
                 {
+                    _logger.Debug($"Выбрана новая шашка: ({x},{y})");
                     _selectedChecker = checker;
                     _availableMoves = _board.GetAvailableMoves(checker);
                     checkersboardpnl.Invalidate();
                 }
                 else
                 {
+                    _logger.Debug($"Отмена выбора шашки");
                     _selectedChecker = null;
                     _availableMoves.Clear();
                     checkersboardpnl.Invalidate();
@@ -198,11 +216,13 @@ namespace Checkers.Forms
 
             if (_timeLeft <= 0)
             {
+                _logger.Warn("Время истекло. Ход передан противнику");
                 EndCurrentTurn();
             }
         }
         private void EndCurrentTurn()
         {
+            _logger.Debug("Завершение хода");
             _selectedChecker = null;
             _availableMoves.Clear();
             _currentPlayerIsWhite = !_currentPlayerIsWhite;
@@ -226,13 +246,15 @@ namespace Checkers.Forms
                     _board.MoveChecker(checker, to[0], to[1]);
                 }
             }
-            checkersboardpnl.Invalidate(); 
+            checkersboardpnl.Invalidate();
+            _logger.Debug($"Доска обновлена из БД. Новых ходов: {game.Moves.Count - _lastMoveCount}");
         }
         private void RefreshBoardIfUpdated(object sender, EventArgs e)
         {
             var game = _gameService.GetGameWithMoves(_gameId);
             if (game.Moves.Count > _lastMoveCount)
             {
+                _logger.Info($"Обнаружены новые ходы. Количество: {game.Moves.Count - _lastMoveCount}");
                 LoadGameFromDatabase(); // перезагружаем доску
                 _lastMoveCount = game.Moves.Count;
             }

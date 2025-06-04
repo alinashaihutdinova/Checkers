@@ -1,6 +1,7 @@
 ﻿using Checkers.Core.Services;
 using Checkers.Core.Entities;
 using Castle.Windsor;
+using NLog;
 
 namespace Checkers.Forms
 {
@@ -13,6 +14,7 @@ namespace Checkers.Forms
         private readonly IUserService _userService;
         private readonly IGameService _gameService;
         private bool passwordVisible = false;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         /// <summary>
         /// конструктор класса
         /// </summary>
@@ -31,21 +33,25 @@ namespace Checkers.Forms
 
             if (string.IsNullOrWhiteSpace(login) || login == "Логин")
             {
+                _logger.Debug("Регистрация: логин не указан");
                 MessageBox.Show("Пожалуйста, введите логин", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (string.IsNullOrWhiteSpace(password) || password == "Пароль")
             {
+                _logger.Debug("Регистрация: пароль не указан");
                 MessageBox.Show("Пожалуйста, введите пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (password != repeatpassword)
             {
+                _logger.Debug("Регистрация: Пароли не совпадают");
                 MessageBox.Show("Пароли не совпадают", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             try
             {
+                _logger.Debug($"Регистрация: Создание пользователя {login}");
                 var user = new User
                 {
                     Id = Guid.NewGuid(),
@@ -53,6 +59,7 @@ namespace Checkers.Forms
                     PasswordHash = _userService.HashPassword(password)
                 };
                 _userService.RegisterUser(user);
+                _logger.Info($"Пользователь зарегистрирован: {login} (ID: {user.Id})");
                 MessageBox.Show("Регистрация прошла успешно!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Hide();
                 var mainForm = new MainForm(_userService, _gameService, user); 
@@ -60,6 +67,7 @@ namespace Checkers.Forms
             }
             catch (Exception ex)
             {
+                _logger.Error(ex, $"Ошибка регистрации: {ex.Message}");
                 MessageBox.Show($"Ошибка регистрации: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -95,6 +103,7 @@ namespace Checkers.Forms
         }
         private void BtnBack_Click(object sender, EventArgs e)
         {
+            _logger.Debug("Возврат на экран входа");
             Hide();
             var entranceForm = new EntranceForm(_container);
             entranceForm.Show();

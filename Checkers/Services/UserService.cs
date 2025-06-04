@@ -1,6 +1,7 @@
 ﻿using Checkers.Data;
 using Checkers.Core.Entities;
 using Checkers.Core.Services;
+using NLog;
 
 namespace Checkers.Services
 {

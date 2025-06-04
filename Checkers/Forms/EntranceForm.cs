@@ -1,6 +1,7 @@
 using Checkers.Forms;
 using Checkers.Core.Services;
 using Castle.Windsor;
+using NLog;
 namespace Checkers
 {
     /// <summary>
@@ -12,6 +13,7 @@ namespace Checkers
         private readonly IWindsorContainer _container;
         private readonly IUserService _userService;
         private readonly IGameService _gameService;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         /// <summary>
         /// конструктор класса с внедрённым контейнером 
         /// </summary>
@@ -29,21 +31,25 @@ namespace Checkers
 
             if (string.IsNullOrWhiteSpace(login) || login == "Логин")
             {
+                _logger.Debug("Попытка входа: логин не указан");
                 MessageBox.Show("Пожалуйста, введите логин", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(password) || password == "Пароль")
             {
+                _logger.Debug("Попытка входа: пароль не указан");
                 MessageBox.Show("Пожалуйста, введите пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             var user = _userService.Authenticate(login, password);
             if (user == null)
             {
+                _logger.Error("Неверный логин или пароль");
                 MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            _logger.Info($"Пользователь вошёл: {user.Login} (ID: {user.Id})");
             var mainForm = new MainForm(_userService, _gameService, user);
             mainForm.Show();
             this.Hide();
@@ -65,6 +71,7 @@ namespace Checkers
         }
         private void btnRegister_Click(object sender, EventArgs e)
         {
+            _logger.Debug("Переход к регистрации");
             var registrationForm = new RegistrationForm(_container);
             registrationForm.Show();
             this.Hide();
