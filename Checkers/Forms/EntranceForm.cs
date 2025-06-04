@@ -2,6 +2,7 @@ using Checkers.Forms;
 using Checkers.Core.Services;
 using Castle.Windsor;
 using NLog;
+using Checkers.Classes;
 namespace Checkers
 {
     /// <summary>
@@ -23,6 +24,16 @@ namespace Checkers
             _container = container;
             _userService = _container.Resolve<IUserService>();
             _gameService = _container.Resolve<IGameService>();
+            LanguageManager.OnLanguageChanged += UpdateLanguage;
+            UpdateLanguage();
+        }
+        private void UpdateLanguage()
+        {
+            lblTitle.Text = LanguageManager.GetString("Title");
+            btnLogin.Text = LanguageManager.GetString("ButtonLogIn");
+            txtLogin.Text = LanguageManager.GetString("TextLogin");
+            txtPassword.Text = LanguageManager.GetString("TextPassword");
+            btnRegister.Text = LanguageManager.GetString("ButtonRegister");
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {

@@ -2,6 +2,7 @@
 using Checkers.Core.Entities;
 using Castle.Windsor;
 using NLog;
+using Checkers.Classes;
 
 namespace Checkers.Forms
 {
@@ -24,6 +25,18 @@ namespace Checkers.Forms
             _container = container;
             _userService = _container.Resolve<IUserService>();
             _gameService = _container.Resolve<IGameService>();
+            LanguageManager.OnLanguageChanged += UpdateLanguage;
+            UpdateLanguage();
+        }
+        private void UpdateLanguage()
+        {
+            lblTitle.Text = LanguageManager.GetString("Title");
+            btnRegister.Text = LanguageManager.GetString("ButtonRegister");
+            txtLogin.Text = LanguageManager.GetString("TextLogin");
+            txtPassword.Text = LanguageManager.GetString("TextPassword");
+            txtRepeatpassword.Text = LanguageManager.GetString("TextRepeatPassword");
+            btnUploudphoto.Text = LanguageManager.GetString("ButtonLoadPhoto");
+            btnBack.Text = LanguageManager.GetString("ButtonBack");
         }
         private void BtnRegister_Click(object sender, EventArgs e)
         {

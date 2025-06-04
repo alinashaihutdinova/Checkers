@@ -39,7 +39,15 @@ namespace Checkers.Forms
             InitializeBoard();
             InitializeTimers();
             LoadAndStartGame();
+            LanguageManager.OnLanguageChanged += UpdateLanguage;
+            UpdateLanguage();
             _logger.Info($"Игровая форма запущена. Игра ID: {_gameId}, Цвет игрока: {(_isWhite ? "Белый" : "Чёрный")}");
+        }
+        private void UpdateLanguage()
+        {
+            btngiveup.Text = LanguageManager.GetString("ButtonGiveUp");
+            btnendmove.Text = LanguageManager.GetString("ButtonEndMove");
+            UpdatePlayerInfo();
         }
         private void InitializeBoard()
         {
@@ -196,16 +204,16 @@ namespace Checkers.Forms
         {
             if (_currentPlayerIsWhite)
             {
-                lblstatus1.Text = "Ваш ход";
+                lblstatus1.Text = LanguageManager.GetString("TextStatus1");
                 lblstatus1.ForeColor = Color.LightGreen;
-                lblstatus2.Text = "Ожидание";
+                lblstatus2.Text = LanguageManager.GetString("TextStatus2");
                 lblstatus2.ForeColor = Color.Black;
             }
             else
             {
-                lblstatus1.Text = "Ожидание";
+                lblstatus1.Text = LanguageManager.GetString("TextStatus2");
                 lblstatus1.ForeColor = Color.Black;
-                lblstatus2.Text = "Ваш ход";
+                lblstatus2.Text = LanguageManager.GetString("TextStatus1");
                 lblstatus2.ForeColor = Color.LightGreen;
             }
         }

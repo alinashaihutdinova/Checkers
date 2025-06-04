@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProfileForm));
             paneldark = new Panel();
+            btnChangeLanguage = new Button();
             lblLogin = new Label();
             pnlLight = new Panel();
             pctruser = new PictureBox();
@@ -42,6 +43,7 @@
             // paneldark
             // 
             paneldark.BackColor = Color.FromArgb(40, 20, 0);
+            paneldark.Controls.Add(btnChangeLanguage);
             paneldark.Controls.Add(lblLogin);
             paneldark.Controls.Add(pnlLight);
             paneldark.Controls.Add(pctruser);
@@ -51,6 +53,20 @@
             paneldark.Name = "paneldark";
             paneldark.Size = new Size(506, 571);
             paneldark.TabIndex = 0;
+            // 
+            // btnChangeLanguage
+            // 
+            btnChangeLanguage.BackColor = Color.FromArgb(0, 64, 0);
+            btnChangeLanguage.FlatStyle = FlatStyle.Popup;
+            btnChangeLanguage.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            btnChangeLanguage.ForeColor = Color.White;
+            btnChangeLanguage.Location = new Point(134, 451);
+            btnChangeLanguage.Name = "btnChangeLanguage";
+            btnChangeLanguage.Size = new Size(229, 42);
+            btnChangeLanguage.TabIndex = 3;
+            btnChangeLanguage.Text = "Сменить язык ";
+            btnChangeLanguage.UseVisualStyleBackColor = false;
+            btnChangeLanguage.Click += btnChangeLanguage_Click;
             // 
             // lblLogin
             // 
@@ -66,9 +82,9 @@
             // pnlLight
             // 
             pnlLight.BackColor = Color.FromArgb(100, 64, 44);
-            pnlLight.Location = new Point(87, 238);
+            pnlLight.Location = new Point(89, 232);
             pnlLight.Name = "pnlLight";
-            pnlLight.Size = new Size(329, 221);
+            pnlLight.Size = new Size(329, 195);
             pnlLight.TabIndex = 1;
             // 
             // pctruser
@@ -87,7 +103,7 @@
             btnback.FlatStyle = FlatStyle.Popup;
             btnback.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 204);
             btnback.ForeColor = Color.White;
-            btnback.Location = new Point(188, 495);
+            btnback.Location = new Point(188, 509);
             btnback.Name = "btnback";
             btnback.Size = new Size(129, 42);
             btnback.TabIndex = 1;
@@ -131,5 +147,6 @@
         private Label lblprofile;
         private Label lblLogin;
         private Panel pnlLight;
+        private Button btnChangeLanguage;
     }
 }

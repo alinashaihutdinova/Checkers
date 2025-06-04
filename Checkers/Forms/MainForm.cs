@@ -1,4 +1,5 @@
-﻿using Checkers.Core.Services;
+﻿using Checkers.Classes;
+using Checkers.Core.Services;
 using NLog;
 
 namespace Checkers.Forms
@@ -23,6 +24,20 @@ namespace Checkers.Forms
             _user = user;
             LoadRatingTable();
             _logger.Info($"Пользователь {_user.Login} вошёл в главное меню");
+            LanguageManager.OnLanguageChanged += UpdateLanguage;
+            UpdateLanguage();
+        }
+        private void UpdateLanguage()
+        {
+            lblTitle.Text = LanguageManager.GetString("Title");
+            btnProfile.Text = LanguageManager.GetString("ButtonProfile");
+            lblLogin.Text = LanguageManager.GetString("LabelLogin");
+            lblPlace.Text = LanguageManager.GetString("LabelPlace");
+            lblWins.Text = LanguageManager.GetString("LabelWin");
+            lblLosses.Text = LanguageManager.GetString("LabelLose");
+            btnExit.Text = LanguageManager.GetString("ButtonExit");
+            btnPlay.Text = LanguageManager.GetString("ButtonPlay");
+            btnjoingame.Text = LanguageManager.GetString("ButtonJoin");
         }
         private void BtnProfile_Click(object sender, EventArgs e)
         {
@@ -39,8 +54,22 @@ namespace Checkers.Forms
         private void BtnPlay_Click(object sender, EventArgs e)
         {
             _logger.Debug("Создание новой игры");
+            if (_gameService == null)
+            {
+                _logger.Error("_gameService не инициализирован");
+                MessageBox.Show("Ошибка: Игровая служба не загружена", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (_user == null)
+            {
+                _logger.Error("_user не инициализирован");
+                MessageBox.Show("Ошибка: Пользователь не определён", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             var game = _gameService.CreateGame(_user.Id);
             _logger.Info($"Игра создана: {game.Id}, Белый игрок: {_user.Id}");
+            if (game == null)
+                throw new InvalidOperationException("Не удалось создать игру");
             var form = new GameForm(_userService, _gameService, game.Id, isWhite: true, currentUserId: _user.Id);
             form.FormClosed += formClosed;
             form.Show();
