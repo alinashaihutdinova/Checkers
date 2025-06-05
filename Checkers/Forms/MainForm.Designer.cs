@@ -237,7 +237,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "MainForm";
-            Text = "MainForm";
+            Text = "Главное меню";
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pctrBoxPlayers).EndInit();

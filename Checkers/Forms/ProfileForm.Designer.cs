@@ -170,7 +170,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "ProfileForm";
-            Text = "ProfileForm";
+            Text = "Профиль";
             paneldark.ResumeLayout(false);
             paneldark.PerformLayout();
             pnlLight.ResumeLayout(false);

@@ -168,7 +168,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "GameForm";
-            Text = "GameForm";
+            Text = "Игра";
             pnlplayer1.ResumeLayout(false);
             pnlplayer1.PerformLayout();
             pnlplayer2.ResumeLayout(false);

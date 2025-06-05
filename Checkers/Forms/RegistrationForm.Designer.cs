@@ -210,7 +210,7 @@ namespace Checkers.Forms
             Controls.Add(lightpanel);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "RegistrationForm";
-            Text = "RegistrationForm";
+            Text = "Регистрация";
             lightpanel.ResumeLayout(false);
             lightpanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pctrBoxProfile).EndInit();
