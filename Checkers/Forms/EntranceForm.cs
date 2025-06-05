@@ -1,10 +1,109 @@
+using Checkers.Forms;
+using Checkers.Core.Services;
+using Castle.Windsor;
+using NLog;
+using Checkers.Classes;
 namespace Checkers
 {
+    /// <summary>
+    /// форма для входа пользователя в систему
+    /// </summary>
     public partial class EntranceForm : Form
     {
-        public EntranceForm()
+        private bool passwordVisible = false;
+        private readonly IWindsorContainer _container;
+        private readonly IUserService _userService;
+        private readonly IGameService _gameService;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        /// <summary>
+        /// конструктор класса с внедрённым контейнером 
+        /// </summary>
+        public EntranceForm(IWindsorContainer container)
         {
             InitializeComponent();
+            _container = container;
+            _userService = _container.Resolve<IUserService>();
+            _gameService = _container.Resolve<IGameService>();
+            LanguageManager.OnLanguageChanged += UpdateLanguage;
+            UpdateLanguage();
+        }
+        private void UpdateLanguage()
+        {
+            lblTitle.Text = LanguageManager.GetString("Title");
+            btnLogin.Text = LanguageManager.GetString("ButtonLogIn");
+            txtLogin.Text = LanguageManager.GetString("TextLogin");
+            txtPassword.Text = LanguageManager.GetString("TextPassword");
+            btnRegister.Text = LanguageManager.GetString("ButtonRegister");
+        }
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            var login = txtLogin.Text.Trim();
+            var password = txtPassword.Text;
+
+            if (string.IsNullOrWhiteSpace(login) || login == "Логин")
+            {
+                _logger.Debug("Попытка входа: логин не указан");
+                MessageBox.Show("Пожалуйста, введите логин", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(password) || password == "Пароль")
+            {
+                _logger.Debug("Попытка входа: пароль не указан");
+                MessageBox.Show("Пожалуйста, введите пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var user = _userService.Authenticate(login, password);
+            if (user == null)
+            {
+                _logger.Error("Неверный логин или пароль");
+                MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            _logger.Info($"Пользователь вошёл: {user.Login} (ID: {user.Id})");
+            var mainForm = new MainForm(_userService, _gameService, user);
+            mainForm.Show();
+            this.Hide();
+        }
+        private void btnTogglePassword_Click(object sender, EventArgs e)
+        {
+            passwordVisible = !passwordVisible;
+            if (passwordVisible)
+            {
+                txtPassword.UseSystemPasswordChar = false; 
+            }
+            else
+            {
+                if (txtPassword.Text != "Пароль")
+                {
+                    txtPassword.UseSystemPasswordChar = true; // скрываем пароль
+                }
+            }
+        }
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            _logger.Debug("Переход к регистрации");
+            var registrationForm = new RegistrationForm(_container);
+            registrationForm.Show();
+            this.Hide();
+        }
+        private void txtPassword_Enter(object sender, EventArgs e)
+        {
+            if (txtPassword.Text == "Пароль")
+            {
+                txtPassword.Text = "";
+                txtPassword.ForeColor = Color.Black;
+                txtPassword.UseSystemPasswordChar = true;
+            }
+        }
+        private void txtPassword_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtPassword.Text))
+            {
+                txtPassword.UseSystemPasswordChar = false;
+                txtPassword.Text = "Пароль";
+                txtPassword.ForeColor = Color.Gray;
+            }
         }
     }
 }
