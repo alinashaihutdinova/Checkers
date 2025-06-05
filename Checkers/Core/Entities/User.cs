@@ -38,6 +38,9 @@
         /// игры, где пользователь играет за чёрных
         /// </summary>
         public List<Game> BlackGames { get; set; } = new();
+        /// <summary>
+        /// история игр
+        /// </summary>
         public List<GameHistory> GameHistories { get; set; } = new();
     }
 }

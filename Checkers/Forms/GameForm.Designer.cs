@@ -50,7 +50,7 @@
             btngiveup.FlatStyle = FlatStyle.Popup;
             btngiveup.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
             btngiveup.ForeColor = SystemColors.Window;
-            btngiveup.Location = new Point(105, 460);
+            btngiveup.Location = new Point(64, 462);
             btngiveup.Name = "btngiveup";
             btngiveup.Size = new Size(222, 50);
             btngiveup.TabIndex = 0;
@@ -64,7 +64,7 @@
             btnendmove.FlatStyle = FlatStyle.Popup;
             btnendmove.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
             btnendmove.ForeColor = SystemColors.Window;
-            btnendmove.Location = new Point(105, 536);
+            btnendmove.Location = new Point(64, 536);
             btnendmove.Name = "btnendmove";
             btnendmove.Size = new Size(222, 50);
             btnendmove.TabIndex = 1;
@@ -74,7 +74,7 @@
             // 
             // checkersboardpnl
             // 
-            checkersboardpnl.Location = new Point(509, 25);
+            checkersboardpnl.Location = new Point(418, 27);
             checkersboardpnl.Name = "checkersboardpnl";
             checkersboardpnl.Size = new Size(620, 620);
             checkersboardpnl.TabIndex = 2;
@@ -86,7 +86,7 @@
             pnlplayer1.BackColor = Color.Tan;
             pnlplayer1.Controls.Add(lblstatus1);
             pnlplayer1.Controls.Add(lblplayer1);
-            pnlplayer1.Location = new Point(69, 58);
+            pnlplayer1.Location = new Point(28, 58);
             pnlplayer1.Name = "pnlplayer1";
             pnlplayer1.Size = new Size(300, 180);
             pnlplayer1.TabIndex = 0;
@@ -105,6 +105,7 @@
             // 
             lblplayer1.AutoSize = true;
             lblplayer1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            lblplayer1.ForeColor = Color.White;
             lblplayer1.Location = new Point(102, 24);
             lblplayer1.Name = "lblplayer1";
             lblplayer1.Size = new Size(107, 32);
@@ -116,7 +117,7 @@
             pnlplayer2.BackColor = Color.Tan;
             pnlplayer2.Controls.Add(lblstatus2);
             pnlplayer2.Controls.Add(lblplayer2);
-            pnlplayer2.Location = new Point(69, 244);
+            pnlplayer2.Location = new Point(28, 244);
             pnlplayer2.Name = "pnlplayer2";
             pnlplayer2.Size = new Size(300, 180);
             pnlplayer2.TabIndex = 3;
@@ -146,7 +147,7 @@
             lbltimer.AutoSize = true;
             lbltimer.Font = new Font("Arial", 14F, FontStyle.Bold, GraphicsUnit.Point, 204);
             lbltimer.ForeColor = SystemColors.Window;
-            lbltimer.Location = new Point(307, 9);
+            lbltimer.Location = new Point(200, 9);
             lbltimer.Name = "lbltimer";
             lbltimer.Size = new Size(196, 33);
             lbltimer.TabIndex = 4;
@@ -157,7 +158,7 @@
             AutoScaleDimensions = new SizeF(144F, 144F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(65, 35, 20);
-            ClientSize = new Size(1206, 675);
+            ClientSize = new Size(1063, 659);
             Controls.Add(lbltimer);
             Controls.Add(pnlplayer1);
             Controls.Add(pnlplayer2);

@@ -36,7 +36,11 @@
             pctruser = new PictureBox();
             btnback = new Button();
             lblprofile = new Label();
+            lblGames = new Label();
+            lblWins = new Label();
+            lblLosses = new Label();
             paneldark.SuspendLayout();
+            pnlLight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pctruser).BeginInit();
             SuspendLayout();
             // 
@@ -75,13 +79,15 @@
             lblLogin.ForeColor = Color.White;
             lblLogin.Location = new Point(211, 185);
             lblLogin.Name = "lblLogin";
-            lblLogin.Size = new Size(81, 32);
+            lblLogin.Size = new Size(0, 32);
             lblLogin.TabIndex = 0;
-            lblLogin.Text = "Логин";
             // 
             // pnlLight
             // 
             pnlLight.BackColor = Color.FromArgb(100, 64, 44);
+            pnlLight.Controls.Add(lblLosses);
+            pnlLight.Controls.Add(lblWins);
+            pnlLight.Controls.Add(lblGames);
             pnlLight.Location = new Point(89, 232);
             pnlLight.Name = "pnlLight";
             pnlLight.Size = new Size(329, 195);
@@ -122,6 +128,38 @@
             lblprofile.TabIndex = 0;
             lblprofile.Text = "Профиль";
             // 
+            // lblGames
+            // 
+            lblGames.AutoSize = true;
+            lblGames.Font = new Font("Segoe UI", 12F);
+            lblGames.ForeColor = Color.White;
+            lblGames.Location = new Point(20, 28);
+            lblGames.Name = "lblGames";
+            lblGames.Size = new Size(78, 32);
+            lblGames.TabIndex = 4;
+            // 
+            // lblWins
+            // 
+            lblWins.AutoSize = true;
+            lblWins.Font = new Font("Segoe UI", 12F);
+            lblWins.ForeColor = Color.White;
+            lblWins.Location = new Point(20, 84);
+            lblWins.Name = "lblWins";
+            lblWins.Size = new Size(78, 32);
+            lblWins.TabIndex = 5;
+            lblWins.Text = "label2";
+            // 
+            // lblLosses
+            // 
+            lblLosses.AutoSize = true;
+            lblLosses.Font = new Font("Segoe UI", 12F);
+            lblLosses.ForeColor = Color.White;
+            lblLosses.Location = new Point(20, 136);
+            lblLosses.Name = "lblLosses";
+            lblLosses.Size = new Size(78, 32);
+            lblLosses.TabIndex = 6;
+            lblLosses.Text = "label3";
+            // 
             // ProfileForm
             // 
             AutoScaleDimensions = new SizeF(144F, 144F);
@@ -135,6 +173,8 @@
             Text = "ProfileForm";
             paneldark.ResumeLayout(false);
             paneldark.PerformLayout();
+            pnlLight.ResumeLayout(false);
+            pnlLight.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pctruser).EndInit();
             ResumeLayout(false);
         }
@@ -148,5 +188,8 @@
         private Label lblLogin;
         private Panel pnlLight;
         private Button btnChangeLanguage;
+        private Label lblLosses;
+        private Label lblWins;
+        private Label lblGames;
     }
 }

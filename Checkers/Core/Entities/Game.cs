@@ -41,6 +41,13 @@
         /// список ходов в игре
         /// </summary>
         public List<Move> Moves { get; set; } = new();
+        /// <summary>
+        /// очередность хода
+        /// </summary>
+        public string Turn { get; set; } = "White";
+        /// <summary>
+        /// статус игры
+        /// </summary>
         public string Status { get; set; } = "Waiting";
     }
 }

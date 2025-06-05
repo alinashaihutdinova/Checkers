@@ -62,7 +62,7 @@ namespace Checkers.Forms
             // txtLogin
             // 
             txtLogin.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtLogin.Font = new Font("Arial Rounded MT Bold", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtLogin.Font = new Font("Segoe UI", 14F);
             txtLogin.ForeColor = Color.Black;
             txtLogin.Location = new Point(36, 82);
             txtLogin.Name = "txtLogin";
@@ -73,24 +73,28 @@ namespace Checkers.Forms
             // txtPassword
             // 
             txtPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtPassword.Font = new Font("Arial Narrow", 16F, FontStyle.Bold);
+            txtPassword.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             txtPassword.ForeColor = Color.Black;
             txtPassword.Location = new Point(37, 166);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(448, 44);
+            txtPassword.Size = new Size(448, 45);
             txtPassword.TabIndex = 2;
             txtPassword.Text = "Пароль";
+            txtPassword.Enter += txtPassword_Enter;
+            txtPassword.Leave += txtPassword_Leave;
             // 
             // txtRepeatpassword
             // 
             txtRepeatpassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtRepeatpassword.Font = new Font("Arial Narrow", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            txtRepeatpassword.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             txtRepeatpassword.ForeColor = Color.Black;
             txtRepeatpassword.Location = new Point(37, 288);
             txtRepeatpassword.Name = "txtRepeatpassword";
-            txtRepeatpassword.Size = new Size(448, 44);
+            txtRepeatpassword.Size = new Size(448, 45);
             txtRepeatpassword.TabIndex = 3;
             txtRepeatpassword.Text = "Подтверждение пароля";
+            txtRepeatpassword.Enter += txtRepeatpassword_Enter;
+            txtRepeatpassword.Leave += txtRepeatpassword_Leave;
             // 
             // btnRegister
             // 
@@ -98,11 +102,11 @@ namespace Checkers.Forms
             btnRegister.BackColor = Color.FromArgb(0, 64, 0);
             btnRegister.FlatAppearance.BorderSize = 0;
             btnRegister.FlatStyle = FlatStyle.Flat;
-            btnRegister.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            btnRegister.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
             btnRegister.ForeColor = Color.White;
             btnRegister.Location = new Point(363, 383);
             btnRegister.Name = "btnRegister";
-            btnRegister.Size = new Size(312, 46);
+            btnRegister.Size = new Size(312, 50);
             btnRegister.TabIndex = 4;
             btnRegister.Text = "Зарегистрироваться";
             btnRegister.UseVisualStyleBackColor = false;
@@ -114,11 +118,11 @@ namespace Checkers.Forms
             btnBack.BackColor = Color.FromArgb(0, 0, 128);
             btnBack.FlatAppearance.BorderSize = 0;
             btnBack.FlatStyle = FlatStyle.Flat;
-            btnBack.Font = new Font("Arial", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            btnBack.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
             btnBack.ForeColor = Color.White;
             btnBack.Location = new Point(363, 459);
             btnBack.Name = "btnBack";
-            btnBack.Size = new Size(312, 46);
+            btnBack.Size = new Size(312, 50);
             btnBack.TabIndex = 5;
             btnBack.Text = "Назад";
             btnBack.UseVisualStyleBackColor = false;
@@ -162,9 +166,9 @@ namespace Checkers.Forms
             // 
             btnUploudphoto.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             btnUploudphoto.Font = new Font("Arial", 9F);
-            btnUploudphoto.Location = new Point(658, 190);
+            btnUploudphoto.Location = new Point(635, 190);
             btnUploudphoto.Name = "btnUploudphoto";
-            btnUploudphoto.Size = new Size(261, 34);
+            btnUploudphoto.Size = new Size(308, 40);
             btnUploudphoto.TabIndex = 7;
             btnUploudphoto.Text = "Загрузите фото профиля";
             btnUploudphoto.UseVisualStyleBackColor = true;
@@ -189,10 +193,11 @@ namespace Checkers.Forms
             // 
             pctrBoxProfile.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pctrBoxProfile.BackColor = SystemColors.Window;
-            pctrBoxProfile.BackgroundImageLayout = ImageLayout.Zoom;
+            pctrBoxProfile.BackgroundImageLayout = ImageLayout.Stretch;
             pctrBoxProfile.Location = new Point(616, 82);
             pctrBoxProfile.Name = "pctrBoxProfile";
-            pctrBoxProfile.Size = new Size(345, 250);
+            pctrBoxProfile.Size = new Size(345, 256);
+            pctrBoxProfile.SizeMode = PictureBoxSizeMode.StretchImage;
             pctrBoxProfile.TabIndex = 6;
             pctrBoxProfile.TabStop = false;
             // 

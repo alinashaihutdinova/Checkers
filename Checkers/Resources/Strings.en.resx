@@ -69,6 +69,15 @@
 	<data name="LabelLose" xml:space="preserve">
     <value>Lost </value>
   </data>
+	<data name="LabelGames" xml:space="preserve">
+    <value>Games </value>
+  </data>
+	<data name="LabelWins" xml:space="preserve">
+    <value>Victory </value>
+  </data>
+	<data name="LabelLosses" xml:space="preserve">
+    <value>Defeats </value>
+  </data>
 	<!-- 
 		Microsoft ResX Schema
 

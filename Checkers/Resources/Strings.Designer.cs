@@ -160,6 +160,15 @@ namespace Checkers.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Игры .
+        /// </summary>
+        internal static string LabelGames {
+            get {
+                return ResourceManager.GetString("LabelGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Логин .
         /// </summary>
         internal static string LabelLogin {
@@ -174,6 +183,15 @@ namespace Checkers.Resources {
         internal static string LabelLose {
             get {
                 return ResourceManager.GetString("LabelLose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Поражения .
+        /// </summary>
+        internal static string LabelLosses {
+            get {
+                return ResourceManager.GetString("LabelLosses", resourceCulture);
             }
         }
         
@@ -210,6 +228,15 @@ namespace Checkers.Resources {
         internal static string LabelWin {
             get {
                 return ResourceManager.GetString("LabelWin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Победы .
+        /// </summary>
+        internal static string LabelWins {
+            get {
+                return ResourceManager.GetString("LabelWins", resourceCulture);
             }
         }
         

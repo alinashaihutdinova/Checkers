@@ -70,7 +70,7 @@ namespace Checkers.Forms
             _logger.Info($"Игра создана: {game.Id}, Белый игрок: {_user.Id}");
             if (game == null)
                 throw new InvalidOperationException("Не удалось создать игру");
-            var form = new GameForm(_userService, _gameService, game.Id, isWhite: true, currentUserId: _user.Id);
+            var form = new GameForm(_userService, _gameService, game.Id, isWhite: true, currentUserId: _user.Id, _user);
             form.FormClosed += formClosed;
             form.Show();
             this.Hide();
@@ -153,14 +153,16 @@ namespace Checkers.Forms
                 MessageBox.Show("нет доступных игр", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            var gameToJoin = availableGames.First();
+            var gameToJoin = availableGames
+                .OrderByDescending(g => g.StartedAt)
+                .FirstOrDefault();
             _logger.Debug($"Попытка присоединиться к игре ID: {gameToJoin.Id}");
             bool joined = _gameService.JoinGame(gameToJoin.Id, _user.Id);
 
             if (joined)
             {
                 _logger.Info($"Пользователь {_user.Login} присоединился к игре ID: {gameToJoin.Id}");
-                var form = new GameForm(_userService, _gameService, gameToJoin.Id, isWhite: false, currentUserId: _user.Id);
+                var form = new GameForm(_userService, _gameService, gameToJoin.Id, isWhite: false, currentUserId: _user.Id, _user);
                 form.Show();
                 this.Hide();
             }

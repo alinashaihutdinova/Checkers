@@ -121,7 +121,7 @@
   <data name="btnTogglePassword2.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAlgAAAJYCAYAAAC+ZpjcAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAbvBJREFUeF7tnQnULUV5rnOjEo0BRMUBnKM4IIrihKJXwCnihCjEm3i9zkSNwRFx
+        DQAACw0B7QfALAAAbvBJREFUeF7tnQnULUV5rnOjEo0BRMUBnKM4IIrihKJXwCnihCjEm3i9zkSNwRFx
         jjOoARVFRYizomgMiRJFERVBUVEQURBxAAS58zzfvutp+f5Vp6zurt1/7f+cfc7zrPWufajd/XV9Vc36
         3r+6d/fvdSIiIiLSFA2WiIiISGM0WCIiIiKN0WCJiIiINEaDJSIiItIYDZaIiIhIYzRYIiIiIo3RYImI
         iIg0RoMlIiIi0hgNloiIiEhjNFgiIiIijdFgiYiIiDRGgyUiIiLSGA2WiIiISGM0WCIiIiKN0WCJiIiI
@@ -600,7 +600,7 @@
   <data name="btnTogglePassword1.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAlgAAAJYCAYAAAC+ZpjcAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAbvBJREFUeF7tnQnULUV5rnOjEo0BRMUBnKM4IIrihKJXwCnihCjEm3i9zkSNwRFx
+        DQAACw0B7QfALAAAbvBJREFUeF7tnQnULUV5rnOjEo0BRMUBnKM4IIrihKJXwCnihCjEm3i9zkSNwRFx
         jjOoARVFRYizomgMiRJFERVBUVEQURBxAAS58zzfvutp+f5Vp6zurt1/7f+cfc7zrPWufajd/XV9Vc36
         3r+6d/fvdSIiIiLSFA2WiIiISGM0WCIiIiKN0WCJiIiINEaDJSIiItIYDZaIiIhIYzRYIiIiIo3RYImI
         iIg0RoMlIiIi0hgNloiIiEhjNFgiIiIijdFgiYiIiDRGgyUiIiLSGA2WiIiISGM0WCIiIiKN0WCJiIiI

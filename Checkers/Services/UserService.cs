@@ -1,7 +1,6 @@
 ﻿using Checkers.Data;
 using Checkers.Core.Entities;
 using Checkers.Core.Services;
-using NLog;
 
 namespace Checkers.Services
 {
@@ -24,7 +23,6 @@ namespace Checkers.Services
         public User? Authenticate(string login, string password)
         {
             var hashedPassword = HashPassword(password);
-
             return _context.Users
                 .FirstOrDefault(u => u.Login == login && u.PasswordHash == hashedPassword);
         }
@@ -94,6 +92,16 @@ namespace Checkers.Services
                 user.Losses++;
             }
             _context.SaveChanges();
+        }
+        /// <summary>
+        /// находит пользователя по айди
+        /// </summary>
+        public User GetUserById(Guid id)
+        {
+            var user = _context.Users.Find(id);
+            if (user == null)
+                throw new ArgumentException("Пользователь не найден", nameof(id));
+            return user;
         }
     }
 }

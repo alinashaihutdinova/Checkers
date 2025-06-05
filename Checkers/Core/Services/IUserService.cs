@@ -11,5 +11,6 @@ namespace Checkers.Core.Services
         void UpdateUserStats(Guid userId, bool isWin);
         List<User> GetAllUsersSortedByRating();
         int CalculateRating(User user);
+        User GetUserById(Guid id);
     }
 }

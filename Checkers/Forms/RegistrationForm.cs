@@ -99,24 +99,60 @@ namespace Checkers.Forms
                 }
             }
         }
+        private void txtPassword_Enter(object sender, EventArgs e)
+        {
+            if (txtPassword.Text == "Пароль")
+            {
+                txtPassword.Text = "";
+                txtPassword.ForeColor = Color.Black;
+                txtPassword.UseSystemPasswordChar = true;
+            }
+        }
+        private void txtPassword_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtPassword.Text))
+            {
+                txtPassword.UseSystemPasswordChar = false;
+                txtPassword.Text = "Пароль";
+                txtPassword.ForeColor = Color.Gray;
+            }
+        }
         private void btnTogglePassword2_Click(object sender, EventArgs e)
         {
             passwordVisible = !passwordVisible;
             if (passwordVisible)
             {
-                txtPassword.UseSystemPasswordChar = false;
+                txtRepeatpassword.UseSystemPasswordChar = false;
             }
             else
             {
-                if (txtPassword.Text != "Подтверждение пароля")
+                if (txtRepeatpassword.Text != "Подтверждение пароля")
                 {
-                    txtPassword.UseSystemPasswordChar = true; // скрываем пароль
+                    txtRepeatpassword.UseSystemPasswordChar = true; // скрываем пароль
                 }
+            }
+        }
+        private void txtRepeatpassword_Enter(object sender, EventArgs e)
+        {
+            if (txtRepeatpassword.Text == "Подтверждение пароля")
+            {
+                txtRepeatpassword.Text = "";
+                txtRepeatpassword.ForeColor = Color.Black;
+                txtRepeatpassword.UseSystemPasswordChar = true;
+            }
+        }
+        private void txtRepeatpassword_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtPassword.Text))
+            {
+                txtRepeatpassword.UseSystemPasswordChar = false;
+                txtRepeatpassword.Text = "Подтверждение пароля";
+                txtRepeatpassword.ForeColor = Color.Gray;
             }
         }
         private void BtnBack_Click(object sender, EventArgs e)
         {
-            _logger.Debug("Возврат на экран входа");
+            _logger.Debug("Возвращение на форму входа");
             Hide();
             var entranceForm = new EntranceForm(_container);
             entranceForm.Show();
@@ -129,6 +165,7 @@ namespace Checkers.Forms
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     pctrBoxProfile.Image = Image.FromFile(openFileDialog.FileName);
+                    btnUploudphoto.Visible = false;
                 }
             }
         }

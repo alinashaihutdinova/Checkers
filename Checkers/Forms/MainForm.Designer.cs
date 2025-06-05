@@ -166,7 +166,6 @@
             tblLayoutPnlHistory.Name = "tblLayoutPnlHistory";
             tblLayoutPnlHistory.RowCount = 1;
             tblLayoutPnlHistory.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tblLayoutPnlHistory.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tblLayoutPnlHistory.Size = new Size(1144, 177);
             tblLayoutPnlHistory.TabIndex = 2;
             // 
