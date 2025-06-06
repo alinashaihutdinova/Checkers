@@ -11,6 +11,12 @@ namespace Checkers.Forms
     /// </summary>
     public partial class GameForm : Form
     {
+        public Checker SelectedChecker { get => _selectedChecker; set => _selectedChecker = value; }
+        public List<(int, int)> AvailableMoves { get => _availableMoves; set => _availableMoves = value; }
+        public bool CurrentPlayerIsWhite { get => _currentPlayerIsWhite; set => _currentPlayerIsWhite = value; }
+        public int TimeLeft { get => _timeLeft; set => _timeLeft = value; }
+        public System.Windows.Forms.Timer Timer { get => _timer; set => _timer = value; }
+
         private readonly IUserService _userService;
         private readonly IGameService _gameService;
         private readonly Core.Entities.User _user;
@@ -77,7 +83,7 @@ namespace Checkers.Forms
             _lastMoveCount = game.Moves.Count;
             _logger.Info($"Игра загружена. Количество ходов: {_lastMoveCount}");
         }
-        private void btngiveup_Click(object sender, EventArgs e)
+        public void btngiveup_Click(object sender, EventArgs e)
         {
             _logger.Warn($"Пользователь сдался. Игра ID: {_gameId}");
             var result = MessageBox.Show("Вы действительно хотите сдаться?","Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -251,7 +257,7 @@ namespace Checkers.Forms
                 EndCurrentTurn();
             }
         }
-        private void EndCurrentTurn()
+        public void EndCurrentTurn()
         {
             _logger.Debug("Завершение хода");
             _selectedChecker = null;
@@ -292,7 +298,7 @@ namespace Checkers.Forms
             CheckAndStartMoveTimer();
             SyncCurrentPlayerTurn();
         }
-        private void CheckAndStartMoveTimer()
+        public void CheckAndStartMoveTimer()
         {
             var game = _gameService.GetGameWithMoves(_gameId);
             if (game == null)
