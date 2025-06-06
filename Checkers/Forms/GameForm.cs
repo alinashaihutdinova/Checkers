@@ -1,7 +1,6 @@
 ﻿using Checkers.Classes;
 using Checkers.Core.Entities;
 using Checkers.Core.Services;
-using Microsoft.VisualBasic.ApplicationServices;
 using NLog;
 
 namespace Checkers.Forms

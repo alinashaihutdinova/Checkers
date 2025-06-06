@@ -14,16 +14,17 @@ namespace Checkers.Forms
         private readonly IUserService _userService;
         private readonly IGameService _gameService;
         private readonly Core.Entities.User _user;
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly NLog.ILogger _logger; // внедряемый логгер для тестов
         /// <summary>
         /// конструктор класса
         /// </summary>
-        public MainForm(IUserService userService, IGameService gameService, Core.Entities.User user)
+        public MainForm(IUserService userService, IGameService gameService, Core.Entities.User user, NLog.ILogger logger = null)
         {
             InitializeComponent();
             _userService = userService;
             _gameService = gameService;
             _user = user;
+            _logger = logger ?? LogManager.GetCurrentClassLogger();
             LoadRatingTable();
             _logger.Info($"Пользователь {_user.Login} вошёл в главное меню");
             LanguageManager.OnLanguageChanged += UpdateLanguage;

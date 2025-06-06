@@ -1,7 +1,9 @@
 ﻿using Checkers.Core.Entities;
 using Checkers.Core.Services;
 using Checkers.Forms;
+using Microsoft.Extensions.Logging;
 using Moq;
+using NLog;
 
 namespace TestCheckers
 {
@@ -11,11 +13,13 @@ namespace TestCheckers
         private readonly Mock<IGameService> gameServiceMock;
         private readonly Checkers.Core.Entities.User testUser;
         private readonly List<Checkers.Core.Entities.User> users;
+        private readonly Mock<NLog.ILogger> loggerMock;
 
         public MainFormTests()
         {
             userServiceMock = new Mock<IUserService>();
             gameServiceMock = new Mock<IGameService>();
+            loggerMock = new Mock<NLog.ILogger>();
             testUser = new Checkers.Core.Entities.User { Id = Guid.NewGuid(), Login = "TestUser" };
 
             // Настройка мока для GetAllUsersSortedByRating
@@ -58,6 +62,29 @@ namespace TestCheckers
             form.btnjoingame_Click(null, EventArgs.Empty);
 
             gameServiceMock.Verify(gs => gs.JoinGame(It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Never());
+        }
+
+        [Fact]
+        public void BtnPlay_Click_LogsError_WhenGameServiceNull()
+        {
+            var form = new MainForm(userServiceMock.Object, null, testUser, loggerMock.Object);
+
+            form.BtnPlay_Click(null, EventArgs.Empty);
+
+            loggerMock.Verify(l => l.Error("_gameService не инициализирован"), Times.Once());
+            gameServiceMock.Verify(gs => gs.CreateGame(It.IsAny<Guid>()), Times.Never());
+        }
+
+        [Fact]
+        public void LoadRatingTable_LogsInfo_WhenUsersLoaded()
+        {
+            userServiceMock.Setup(us => us.GetAllUsersSortedByRating()).Returns(users);
+            var form = new MainForm(userServiceMock.Object, gameServiceMock.Object, testUser, loggerMock.Object);
+
+            form.LoadRatingTable();
+
+            loggerMock.Verify(l => l.Debug("Загрузка рейтинговой таблицы"), Times.Exactly(2));
+            loggerMock.Verify(l => l.Info($"Рейтинговая таблица обновлена. Найдено пользователей: {users.Count}"), Times.Exactly(2));
         }
     }
 }
