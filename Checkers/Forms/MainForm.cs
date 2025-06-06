@@ -9,6 +9,8 @@ namespace Checkers.Forms
     /// </summary>
     public partial class MainForm : Form
     {
+        public TableLayoutPanel TblLayoutPnlHistory { get => tblLayoutPnlHistory; set => tblLayoutPnlHistory = value; }
+
         private readonly IUserService _userService;
         private readonly IGameService _gameService;
         private readonly Core.Entities.User _user;
@@ -51,7 +53,7 @@ namespace Checkers.Forms
             _logger.Info("Выход из приложения");
             Application.Exit();
         }
-        private void BtnPlay_Click(object sender, EventArgs e)
+        public void BtnPlay_Click(object sender, EventArgs e)
         {
             _logger.Debug("Создание новой игры");
             if (_gameService == null)
@@ -75,7 +77,7 @@ namespace Checkers.Forms
             form.Show();
             this.Hide();
         }
-        private void LoadRatingTable()//метод для заполнения таблицы рейтинга
+        public void LoadRatingTable()//метод для заполнения таблицы рейтинга
         {
             _logger.Debug("Загрузка рейтинговой таблицы");
             var users = _userService.GetAllUsersSortedByRating();
@@ -143,7 +145,7 @@ namespace Checkers.Forms
             _logger.Debug("Форма игры закрыта. Обновление таблицы");
             LoadRatingTable();
         }
-        private void btnjoingame_Click(object sender, EventArgs e)
+        public void btnjoingame_Click(object sender, EventArgs e)
         {
             _logger.Debug("Поиск доступных игр");
             var availableGames = _gameService.GetAvailableGames();
