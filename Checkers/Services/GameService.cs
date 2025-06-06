@@ -105,7 +105,7 @@ namespace Checkers.Services
         /// </summary>
         public bool IsPlayersTurn(Guid gameId, Guid userId)
         {
-            var game = _context.Games.Find(gameId);
+            var game = GetGameWithMoves(gameId);
             if (game == null) 
                 return false;
             if (game.Turn == "White")
@@ -134,7 +134,10 @@ namespace Checkers.Services
         /// </summary>
         public void EndGame(Guid gameId, string winnerColor)
         {
-            var game = _context.Games.Find(gameId);
+            var game = _context.Games
+                .Include(g => g.WhitePlayer)
+                .Include(g => g.BlackPlayer)
+                .FirstOrDefault(g => g.Id == gameId);
             if (game == null)
                 return;
             game.FinishedAt = DateTime.UtcNow;

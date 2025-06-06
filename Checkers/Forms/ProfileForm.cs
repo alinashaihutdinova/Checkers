@@ -17,10 +17,11 @@ namespace Checkers.Forms
         /// <summary>
         /// конструктор класса 
         /// </summary>
-        public ProfileForm(IUserService userService, User user)
+        public ProfileForm(IUserService userService, IGameService gameService, User user)
         {
             InitializeComponent();
             _userService = userService;
+            _gameService = gameService;
             _user = user;
             LanguageManager.OnLanguageChanged += UpdateLanguage;
             UpdateLanguage();

@@ -63,10 +63,13 @@ namespace Checkers.Services
         /// </summary>
         public List<User> GetAllUsersSortedByRating()
         {
-            return _context.Users
-                .AsEnumerable()
-                .OrderByDescending(u => u.Wins * 50 - u.Losses * 30) 
-                .ToList();
+            using (var freshContext = new CheckersDbContext())
+            {
+                return freshContext.Users
+                    .AsEnumerable()
+                    .OrderByDescending(u => CalculateRating(u))
+                    .ToList();
+            }
         }
         /// <summary>
         /// считает рейтинг

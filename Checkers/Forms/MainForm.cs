@@ -42,7 +42,7 @@ namespace Checkers.Forms
         private void BtnProfile_Click(object sender, EventArgs e)
         {
             _logger.Debug("Переход к профилю");
-            var profileForm = new ProfileForm(_userService, _user);
+            var profileForm = new ProfileForm(_userService, _gameService, _user);
             profileForm.Show();
             this.Hide();
         }
@@ -140,7 +140,6 @@ namespace Checkers.Forms
         }
         private void formClosed(object sender, FormClosedEventArgs e)
         {
-            _logger.Debug("Форма игры закрыта. Обновление таблицы");
             LoadRatingTable();
         }
         private void btnjoingame_Click(object sender, EventArgs e)
@@ -158,11 +157,11 @@ namespace Checkers.Forms
                 .FirstOrDefault();
             _logger.Debug($"Попытка присоединиться к игре ID: {gameToJoin.Id}");
             bool joined = _gameService.JoinGame(gameToJoin.Id, _user.Id);
-
             if (joined)
             {
                 _logger.Info($"Пользователь {_user.Login} присоединился к игре ID: {gameToJoin.Id}");
                 var form = new GameForm(_userService, _gameService, gameToJoin.Id, isWhite: false, currentUserId: _user.Id, _user);
+                form.FormClosed += formClosed;
                 form.Show();
                 this.Hide();
             }
