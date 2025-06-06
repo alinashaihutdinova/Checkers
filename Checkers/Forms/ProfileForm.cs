@@ -10,6 +10,11 @@ namespace Checkers.Forms
     /// </summary>
     public partial class ProfileForm : Form
     {
+        public Label LblLogin { get => lblLogin; set => lblLogin = value; }
+        public Label LblGames { get => lblGames; set => lblGames = value; }
+        public Label LblWins { get => lblWins; set => lblWins = value; }
+        public Label LblLosses { get => lblLosses; set => lblLosses = value; }
+
         private readonly IUserService _userService;
         private readonly IGameService _gameService;
         private readonly User _user;
@@ -42,14 +47,14 @@ namespace Checkers.Forms
             _logger.Debug("Язык интерфейса обновлён");
         }
         
-        private void btnback_Click(object sender, EventArgs e)
+        public void btnback_Click(object sender, EventArgs e)
         {
             _logger.Debug("Пользователь вернулся в главную форму");
             Hide();
             var mainform = new MainForm(_userService, _gameService, _user);
             mainform.Show();
         }
-        private void btnChangeLanguage_Click(object sender, EventArgs e)
+        public void btnChangeLanguage_Click(object sender, EventArgs e)
         {
             string currentLang = Thread.CurrentThread.CurrentUICulture.Name;
             _logger.Debug($"Текущий язык: {currentLang}");

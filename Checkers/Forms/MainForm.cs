@@ -9,19 +9,22 @@ namespace Checkers.Forms
     /// </summary>
     public partial class MainForm : Form
     {
+        public TableLayoutPanel TblLayoutPnlHistory { get => tblLayoutPnlHistory; set => tblLayoutPnlHistory = value; }
+
         private readonly IUserService _userService;
         private readonly IGameService _gameService;
         private readonly Core.Entities.User _user;
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly NLog.ILogger _logger; // внедряемый логгер для тестов
         /// <summary>
         /// конструктор класса
         /// </summary>
-        public MainForm(IUserService userService, IGameService gameService, Core.Entities.User user)
+        public MainForm(IUserService userService, IGameService gameService, Core.Entities.User user, NLog.ILogger logger = null)
         {
             InitializeComponent();
             _userService = userService;
             _gameService = gameService;
             _user = user;
+            _logger = logger ?? LogManager.GetCurrentClassLogger();
             LoadRatingTable();
             _logger.Info($"Пользователь {_user.Login} вошёл в главное меню");
             LanguageManager.OnLanguageChanged += UpdateLanguage;
@@ -51,7 +54,7 @@ namespace Checkers.Forms
             _logger.Info("Выход из приложения");
             Application.Exit();
         }
-        private void BtnPlay_Click(object sender, EventArgs e)
+        public void BtnPlay_Click(object sender, EventArgs e)
         {
             _logger.Debug("Создание новой игры");
             if (_gameService == null)
@@ -75,7 +78,7 @@ namespace Checkers.Forms
             form.Show();
             this.Hide();
         }
-        private void LoadRatingTable()//метод для заполнения таблицы рейтинга
+        public void LoadRatingTable()//метод для заполнения таблицы рейтинга
         {
             _logger.Debug("Загрузка рейтинговой таблицы");
             var users = _userService.GetAllUsersSortedByRating();
@@ -142,7 +145,7 @@ namespace Checkers.Forms
         {
             LoadRatingTable();
         }
-        private void btnjoingame_Click(object sender, EventArgs e)
+        public void btnjoingame_Click(object sender, EventArgs e)
         {
             _logger.Debug("Поиск доступных игр");
             var availableGames = _gameService.GetAvailableGames();

@@ -11,6 +11,10 @@ namespace Checkers.Forms
     /// </summary>
     public partial class RegistrationForm : Form
     {
+        public TextBox TxtLogin { get => txtLogin; set => txtLogin = value; }
+        public TextBox TxtPassword { get => txtPassword; set => txtPassword = value; }
+        public TextBox TxtRepeatpassword { get => txtRepeatpassword; set => txtRepeatpassword = value; }
+
         private readonly IWindsorContainer _container;
         private readonly IUserService _userService;
         private readonly IGameService _gameService;
@@ -38,7 +42,7 @@ namespace Checkers.Forms
             btnUploudphoto.Text = LanguageManager.GetString("ButtonLoadPhoto");
             btnBack.Text = LanguageManager.GetString("ButtonBack");
         }
-        private void BtnRegister_Click(object sender, EventArgs e)
+        public void BtnRegister_Click(object sender, EventArgs e)
         {
             var login = txtLogin.Text.Trim();
             var password = txtPassword.Text;
@@ -84,7 +88,7 @@ namespace Checkers.Forms
                 MessageBox.Show($"Ошибка регистрации: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void btnTogglePassword1_Click(object sender, EventArgs e)
+        public void btnTogglePassword1_Click(object sender, EventArgs e)
         {
             passwordVisible = !passwordVisible;
             if (passwordVisible)
@@ -157,7 +161,7 @@ namespace Checkers.Forms
             var entranceForm = new EntranceForm(_container);
             entranceForm.Show();
         }
-        private void BtnUploudPhoto_Click(object sender, EventArgs e)
+        public void BtnUploudPhoto_Click(object sender, EventArgs e)
         {
             using (var openFileDialog = new OpenFileDialog())
             {

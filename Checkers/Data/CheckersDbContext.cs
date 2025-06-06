@@ -26,7 +26,7 @@ namespace Checkers.Data
         public DbSet<GameHistory> GameHistories { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=mydatabase;Username=postgres;Password=alshnqq");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5434;Database=mydatabase;Username=postgres;Password=alshnqq");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
