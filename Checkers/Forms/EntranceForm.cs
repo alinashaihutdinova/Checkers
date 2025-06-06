@@ -10,6 +10,9 @@ namespace Checkers
     /// </summary>
     public partial class EntranceForm : Form
     {
+        public TextBox TxtLogin { get => txtLogin; set => txtLogin = value; }
+        public TextBox TxtPassword { get => txtPassword; set => txtPassword = value; }
+
         private bool passwordVisible = false;
         private readonly IWindsorContainer _container;
         private readonly IUserService _userService;
@@ -65,7 +68,7 @@ namespace Checkers
             mainForm.Show();
             this.Hide();
         }
-        private void btnTogglePassword_Click(object sender, EventArgs e)
+        public void btnTogglePassword_Click(object sender, EventArgs e)
         {
             passwordVisible = !passwordVisible;
             if (passwordVisible)
@@ -80,7 +83,7 @@ namespace Checkers
                 }
             }
         }
-        private void btnRegister_Click(object sender, EventArgs e)
+        public void btnRegister_Click(object sender, EventArgs e)
         {
             _logger.Debug("Переход к регистрации");
             var registrationForm = new RegistrationForm(_container);
