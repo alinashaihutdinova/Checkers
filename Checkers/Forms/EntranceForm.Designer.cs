@@ -146,7 +146,7 @@
             Controls.Add(lightpanel);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "EntranceForm";
-            Text = "EntranceForm";
+            Text = "Вход";
             ResumeLayout(false);
             PerformLayout();
         }

@@ -107,6 +107,6 @@ namespace Checkers
                 txtPassword.Text = "Пароль";
                 txtPassword.ForeColor = Color.Gray;
             }
-        }
+         }
     }
 }
